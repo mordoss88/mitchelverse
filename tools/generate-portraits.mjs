@@ -1,7 +1,7 @@
 // Converts portrait images made in Gemini into small WebP files for the site.
 // Usage: node tools/generate-portraits.mjs --convert --site <id>.png [<id>.png ...]
 // Input files are read from portraits-src/ (or the path you give).
-// Output goes to site/portraits/<id>.webp. Then add the id to PORTRAITS in site/index.html.
+// Output goes to site/portraits/<id>.webp (400 px, for lists) and <id>-lg.webp (up to 1024 px, for the full-size view). Then add the id to PORTRAITS in site/index.html.
 import { existsSync, mkdirSync } from "node:fs";
 import { basename, extname, join, resolve } from "node:path";
 import sharp from "sharp";
@@ -30,6 +30,10 @@ for (const f of files) {
   const id = basename(src, extname(src)).toLowerCase();
   const out = join(outDir, `${id}.webp`);
   await sharp(src).resize(400, 400, { fit: "cover" }).webp({ quality: 80 }).toFile(out);
-  console.log(`${src} -> site/portraits/${id}.webp`);
+  await sharp(src)
+    .resize(1024, 1024, { fit: "cover", withoutEnlargement: true })
+    .webp({ quality: 78 })
+    .toFile(join(outDir, `${id}-lg.webp`));
+  console.log(`${src} -> site/portraits/${id}.webp, ${id}-lg.webp`);
   console.log(`  Add to PORTRAITS: ${id}:"portraits/${id}.webp",`);
 }

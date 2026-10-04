@@ -127,6 +127,15 @@ button,select{font:inherit;color:inherit}
 .av.ai.fail>svg{display:block}
 .av.ai.fail>img,.av.ai.fail>.badge{display:none}
 .badge{position:absolute;right:-4px;bottom:-3px;font:700 9px/1.4 var(--sans);background:var(--ink);color:var(--bg);border-radius:6px;padding:0 4px}
+.sheet-top .pbig{width:128px;height:128px;padding:0;border:0;background:none;cursor:zoom-in;border-radius:50%;flex:none;position:relative}
+.sheet-top .pbig .av{width:100%;height:100%}
+.pbig .badge{display:none}
+.pbig .zoom{position:absolute;left:50%;bottom:-6px;transform:translateX(-50%);font:600 10px/1.6 var(--sans);background:var(--panel);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:0 6px;white-space:nowrap}
+.viewer{position:fixed;inset:0;z-index:20;background:rgba(12,10,18,.88);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:16px;cursor:zoom-out}
+.viewer[hidden]{display:none}
+.viewer img{max-width:min(92vw,720px);max-height:78vh;width:auto;height:auto;border-radius:14px;box-shadow:0 10px 40px rgba(0,0,0,.5)}
+.viewer p{color:#eee;font-family:var(--sans);font-size:.85rem;margin:0;text-align:center}
+.viewer .close{position:fixed;color:var(--ink)}
 .ai-cap{font-size:.8rem;color:var(--muted);margin:4px 0 0;font-style:italic}
 .count{font-family:var(--sans);font-size:.85rem;color:var(--muted);margin:0 0 10px}
 .switch{display:flex;align-items:center;gap:12px;cursor:pointer;font-family:var(--sans)}
@@ -234,6 +243,7 @@ footer{color:var(--muted);font-size:.8rem;margin-top:18px;max-width:62ch}
   </section>
 </div>
 <div class="scrim" id="scrim"></div>
+<div class="viewer" id="viewer" role="dialog" aria-modal="true" aria-label="Portrait" hidden><button class="close" type="button" aria-label="Close">&times;</button><img alt=""><p></p></div>
 <section class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetName"></section>
 
 <script>
@@ -496,9 +506,19 @@ function openSheet(id){
     return `<li class="${e.k==="m"?"m":e.k==="f"?"f":""}" style="--b:var(--${b.id})"><h3>${e.yl}<small>${b.t}${e.p?", part "+e.p:""} (${kind})</small></h3><p>${e.t}</p>${e.x?`<button class="reveal" type="button">Show how this story ends for them</button><p class="endtxt" hidden>${e.x}</p>`:""}</li>`}).join("");
   const links=LINKS.filter(l=>(l[0]===id||l[1]===id)&&visLink(l)).map(l=>{const o=byId[l[0]===id?l[1]:l[0]];if(!ok(o.id))return"";
     return `<button class="chip" type="button" data-id="${o.id}">${avatar(o)}<span>${o.name} <small>${l[3]}, ${bookById[l[2]].ab}</small></span></button>`}).join("");
-  sheet.innerHTML=`<button class="close" type="button" aria-label="Close">\u00d7</button><div class="sheet-top">${avatar(c)}<div><h2 id="sheetName">${c.name}</h2><p class="role">${c.role}</p>${aiOn&&PORTRAITS[c.id]?`<p class="ai-cap">AI-generated image. Probably not how you imagined it.</p>`:""}</div></div><ul class="tl">${tl}</ul>${links?`<div class="links"><h4>Connected to</h4><div class="chips">${links}</div></div>`:""}`;
-  sheet.scrollTop=0;sheet.classList.add("open");scrim.classList.add("open");sheet.querySelector(".close").focus();
+  sheet.innerHTML=`<button class="close" type="button" aria-label="Close">\u00d7</button><div class="sheet-top">${aiOn&&PORTRAITS[c.id]?`<button class="pbig" type="button" aria-label="Show bigger portrait of ${c.name}">${avatar(c)}<span class="zoom">Tap to enlarge</span></button>`:avatar(c)}<div><h2 id="sheetName">${c.name}</h2><p class="role">${c.role}</p>${aiOn&&PORTRAITS[c.id]?`<p class="ai-cap">AI-generated image. Probably not how you imagined it.</p>`:""}</div></div><ul class="tl">${tl}</ul>${links?`<div class="links"><h4>Connected to</h4><div class="chips">${links}</div></div>`:""}`;
+  sheet.dataset.id=id;sheet.scrollTop=0;sheet.classList.add("open");scrim.classList.add("open");sheet.querySelector(".close").focus();
 }
+const viewer=document.getElementById("viewer");
+function openViewer(id){
+  const c=byId[id],src=PORTRAITS[id],img=viewer.querySelector("img");
+  img.onerror=()=>{img.onerror=null;img.src=src};
+  img.src=src.replace(/\.webp$/,"-lg.webp");img.alt="AI-generated portrait of "+c.name;
+  viewer.querySelector("p").textContent=c.name+". AI-generated image. Probably not how you imagined it.";
+  viewer.hidden=false;viewer.querySelector(".close").focus();
+}
+function closeViewer(){viewer.hidden=true;const pb=sheet.querySelector(".pbig");if(pb)pb.focus()}
+viewer.addEventListener("click",closeViewer);
 function closeSheet(){sheet.classList.remove("open");scrim.classList.remove("open");if(lastF)lastF.focus()}
 
 document.getElementById("books").addEventListener("change",e=>{const s=e.target.closest("select");if(!s)return;st[s.dataset.b]=Number(s.value);save();render()});
@@ -508,9 +528,9 @@ document.getElementById("tBook").onclick=()=>{view="book";save();render()};
 document.querySelectorAll("[data-f]").forEach(b=>b.onclick=()=>{flt=b.dataset.f;save();render()});
 document.getElementById("tYear").onclick=()=>{view="year";save();render()};
 document.getElementById("view").addEventListener("click",e=>{const r=e.target.closest("[data-id]");if(r)openSheet(r.dataset.id)});
-sheet.addEventListener("click",e=>{if(e.target.closest(".close"))return closeSheet();const rv=e.target.closest(".reveal");if(rv){rv.nextElementSibling.hidden=false;rv.remove();return}const ch=e.target.closest(".chip");if(ch)openSheet(ch.dataset.id)});
+sheet.addEventListener("click",e=>{if(e.target.closest(".close"))return closeSheet();const pb=e.target.closest(".pbig");if(pb)return openViewer(sheet.dataset.id);const rv=e.target.closest(".reveal");if(rv){rv.nextElementSibling.hidden=false;rv.remove();return}const ch=e.target.closest(".chip");if(ch)openSheet(ch.dataset.id)});
 scrim.addEventListener("click",closeSheet);
-document.addEventListener("keydown",e=>{if(e.key==="Escape"&&sheet.classList.contains("open"))closeSheet()});
+document.addEventListener("keydown",e=>{if(e.key!=="Escape")return;if(!viewer.hidden)closeViewer();else if(sheet.classList.contains("open"))closeSheet()});
 document.getElementById("aiToggle").addEventListener("change",e=>{aiOn=e.target.checked;save();render()});
 const LOCAL=/^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname);
 async function send(form){
