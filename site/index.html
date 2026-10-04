@@ -147,9 +147,12 @@ button,select{font:inherit;color:inherit}
 .switch input:checked+.track::after{transform:translateX(18px)}
 .switch input:focus-visible+.track{outline:3px solid var(--ca);outline-offset:2px}
 .switch small{display:block;color:var(--muted);font-weight:500;font-size:.78rem}
-.ai-note{border-left:4px solid var(--btc)}
-.ai-note p{margin:0 0 8px;font-size:.92rem}
-.vote{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 10px}
+.modal{position:fixed;inset:0;z-index:30;background:rgba(12,10,18,.55);display:grid;place-items:center;padding:16px}
+.modal[hidden]{display:none}
+.modal .box{background:var(--panel);color:var(--ink);border-radius:16px;padding:20px;max-width:440px;width:100%;box-shadow:0 10px 40px rgba(0,0,0,.35)}
+.modal h2{font-family:var(--sans);font-size:1.2rem;margin:0 0 10px}
+.modal p{margin:0 0 10px;font-size:.95rem}
+.modal .acts{display:flex;justify-content:flex-end;gap:8px;margin-top:16px}
 .btn.solid{background:var(--ink);color:var(--bg);border-color:var(--ink)}
 .fld{display:block;font-family:var(--sans);font-size:.85rem;margin:0 0 10px}
 .fld input,.fld select,.fld textarea{display:block;width:100%;margin-top:4px;font-family:var(--serif);font-size:1rem;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:8px;padding:8px}
@@ -177,24 +180,7 @@ footer{color:var(--muted);font-size:.8rem;margin-top:18px;max-width:62ch}
   </div>
 
   <div class="panel">
-    <label class="switch"><input type="checkbox" id="aiToggle"><span class="track"></span><span>AI portraits<small>Test version. Off by default.</small></span></label>
-  </div>
-
-  <div class="panel ai-note" id="aiBanner" hidden>
-    <p><b>AI portraits are a work in progress.</b> These images are made with an AI image tool. They are probably not how you imagined these people and places when you read the books. Only a few are ready, and the others still use the drawings.</p>
-    <form name="ai-vote" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="voteForm">
-      <input type="hidden" name="form-name" value="ai-vote">
-      <input type="hidden" name="vote" id="voteVal">
-      <p hidden><label>Leave this empty <input name="bot-field"></label></p>
-      <p><b>Should I make more of them?</b></p>
-      <div class="vote">
-        <button class="btn solid" type="submit" data-v="yes">Yes, make more</button>
-        <button class="btn" type="submit" data-v="no">No, keep the drawings</button>
-      </div>
-      <label class="fld">Anything to add? (optional)<textarea name="comment" rows="2"></textarea></label>
-      <p class="err" id="voteErr" hidden>Could not send your vote. Check your connection and try again.</p>
-    </form>
-    <p class="thanks" id="voteThanks" hidden>Thank you. Your vote is saved.</p>
+    <label class="switch"><input type="checkbox" id="aiToggle"><span class="track"></span><span>AI portraits<small>Off by default.</small></span></label>
   </div>
 
   <div class="tabs" role="tablist">
@@ -244,6 +230,13 @@ footer{color:var(--muted);font-size:.8rem;margin-top:18px;max-width:62ch}
   </section>
 </div>
 <div class="scrim" id="scrim"></div>
+<div class="modal" id="aiModal" role="dialog" aria-modal="true" aria-labelledby="aiModalT" hidden><div class="box">
+  <h2 id="aiModalT">Turn on AI portraits?</h2>
+  <p>The portraits of the people are made with an AI image tool. They are not official and they are not from the books.</p>
+  <p>They show one fan's idea of each person. They are probably not how you imagined them when you read the books.</p>
+  <p>The books give few details about how people look, so hair, faces and clothes are often guesses. If a portrait looks wrong to you, tell us with the form at the bottom of the page.</p>
+  <div class="acts"><button class="btn" type="button" id="aiCancel">Cancel</button><button class="btn solid" type="button" id="aiOk">Show portraits</button></div>
+</div></div>
 <div class="viewer" id="viewer" role="dialog" aria-modal="true" aria-label="Portrait" hidden><button class="close" type="button" aria-label="Close">&times;</button><img alt=""><p></p></div>
 <section class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetName"></section>
 
@@ -517,9 +510,6 @@ function render(){
   const np=C.filter(c=>c.kind==="person"&&inF(c)&&ok(c.id)).length,nt=C.filter(c=>c.kind==="thing"&&inF(c)&&ok(c.id)).length,nb=BOOKS.filter(b=>st[b.id]).length;
   document.getElementById("count").textContent=nb?`Showing ${np} ${np===1?"person":"people"} and ${nt} ${nt===1?"thing":"things"} from ${nb} ${nb===1?"book":"books"}.`:"";
   document.getElementById("aiToggle").checked=aiOn;
-  const voted=(()=>{try{return localStorage.getItem("mv-voted")==="1"}catch(e){return false}})();
-  document.getElementById("aiBanner").hidden=!aiOn;
-  document.getElementById("voteForm").hidden=voted;document.getElementById("voteThanks").hidden=!voted;
 }
 
 const sheet=document.getElementById("sheet"),scrim=document.getElementById("scrim");let lastF=null;
@@ -554,22 +544,27 @@ document.getElementById("tYear").onclick=()=>{view="year";save();render()};
 document.getElementById("view").addEventListener("click",e=>{const r=e.target.closest("[data-id]");if(r)openSheet(r.dataset.id)});
 sheet.addEventListener("click",e=>{if(e.target.closest(".close"))return closeSheet();const pb=e.target.closest(".pbig");if(pb)return openViewer(sheet.dataset.id);const rv=e.target.closest(".reveal");if(rv){rv.nextElementSibling.hidden=false;rv.remove();return}const ch=e.target.closest(".chip");if(ch)openSheet(ch.dataset.id)});
 scrim.addEventListener("click",closeSheet);
-document.addEventListener("keydown",e=>{if(e.key!=="Escape")return;if(!viewer.hidden)closeViewer();else if(sheet.classList.contains("open"))closeSheet()});
-document.getElementById("aiToggle").addEventListener("change",e=>{aiOn=e.target.checked;save();render()});
+document.addEventListener("keydown",e=>{if(e.key!=="Escape")return;if(!aiModal.hidden)closeAiModal(false);else if(!viewer.hidden)closeViewer();else if(sheet.classList.contains("open"))closeSheet()});
+const aiModal=document.getElementById("aiModal"),aiToggle=document.getElementById("aiToggle");
+const aiSeen=()=>{try{return localStorage.getItem("mv-ai-ok")==="1"}catch(e){return false}};
+function closeAiModal(on){
+  aiModal.hidden=true;
+  if(on){aiOn=true;try{localStorage.setItem("mv-ai-ok","1")}catch(e){}save()}
+  render();aiToggle.focus();
+}
+aiToggle.addEventListener("change",e=>{
+  if(e.target.checked&&!aiSeen()){e.target.checked=false;aiModal.hidden=false;document.getElementById("aiOk").focus();return}
+  aiOn=e.target.checked;save();render();
+});
+document.getElementById("aiOk").onclick=()=>closeAiModal(true);
+document.getElementById("aiCancel").onclick=()=>closeAiModal(false);
+aiModal.addEventListener("click",e=>{if(e.target===aiModal)closeAiModal(false)});
 const LOCAL=/^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname);
 async function send(form){
   if(LOCAL){console.info("[local preview] form not sent:",Object.fromEntries(new FormData(form)));return}
   const r=await fetch("/",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:new URLSearchParams(new FormData(form)).toString()});
   if(!r.ok)throw new Error("HTTP "+r.status);
 }
-const voteForm=document.getElementById("voteForm");let voteChoice="";
-voteForm.querySelectorAll("[data-v]").forEach(b=>b.addEventListener("click",()=>{voteChoice=b.dataset.v}));
-voteForm.addEventListener("submit",async e=>{
-  e.preventDefault();if(!voteChoice)return;
-  document.getElementById("voteVal").value=voteChoice;document.getElementById("voteErr").hidden=true;
-  try{await send(voteForm);try{localStorage.setItem("mv-voted","1")}catch(err){}render()}
-  catch(err){document.getElementById("voteErr").hidden=false}
-});
 const fbForm=document.getElementById("fbForm");
 fbForm.addEventListener("submit",async e=>{
   e.preventDefault();document.getElementById("fbErr").hidden=true;
