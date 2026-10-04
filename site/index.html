@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mitchellverse: what comes back</title>
+<meta name="description" content="A spoiler-safe map of the people, places and ideas that come back across David Mitchell's novels. Mark the books you have read and see only those.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Mitchellverse: what comes back">
+<meta property="og:description" content="A spoiler-safe map of the people, places and ideas that come back across David Mitchell's novels.">
+<!-- Change YOUR-SITE to your real Netlify address after the first deploy -->
+<meta property="og:image" content="https://YOUR-SITE.netlify.app/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%80%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#E6E3EC;--panel:#F5F3F8;--ink:#221F2B;--muted:#605B6E;--line:#CBC6D6;--lock:#DAD6E2;
+  --gw:#2B7C78;--n9d:#8C6E2A;--ca:#3762A8;--bsg:#4E8A3C;--ta:#B3463A;--btc:#6A4B9C;--sh:#9B3C6A;--ua:#C17C22;
+  --serif:"Literata",Georgia,"Times New Roman",serif;--sans:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#17151D;--panel:#201D28;--ink:#E7E4EE;--muted:#A19BB0;--line:#383345;--lock:#26222F;
+  --gw:#5DBDB7;--n9d:#D3B467;--ca:#73A0E6;--bsg:#86C26F;--ta:#E57D70;--btc:#AA8BE0;--sh:#DD7BA8;--ua:#EDAA55;}}
+:root[data-theme="dark"]{--bg:#17151D;--panel:#201D28;--ink:#E7E4EE;--muted:#A19BB0;--line:#383345;--lock:#26222F;
+  --gw:#5DBDB7;--n9d:#D3B467;--ca:#73A0E6;--bsg:#86C26F;--ta:#E57D70;--btc:#AA8BE0;--sh:#DD7BA8;--ua:#EDAA55;}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--serif);line-height:1.55;-webkit-text-size-adjust:100%}
+.wrap{max-width:780px;margin:0 auto;padding:20px 14px 48px}
+h1{font-family:var(--sans);font-weight:700;font-size:clamp(1.7rem,6.4vw,2.6rem);line-height:1.04;margin:4px 0 8px;letter-spacing:-.02em}
+.lede{color:var(--muted);margin:0 0 16px;max-width:58ch;font-size:.95rem}
+button,select{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--ca);outline-offset:2px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px;margin-bottom:16px}
+.panel>p{margin:0 0 10px;font-family:var(--sans);font-weight:500}
+.books{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.books li{display:grid;grid-template-columns:30px 1fr auto;gap:10px;align-items:center}
+.tile{width:30px;height:40px;border-radius:3px 6px 6px 3px;background:var(--b);display:grid;place-items:center;color:#fff;font-family:var(--sans);font-weight:700;font-size:.72rem;box-shadow:inset 3px 0 0 rgba(0,0,0,.18)}
+.books .nm{line-height:1.2;font-size:.92rem}
+.books .nm small{display:block;color:var(--muted);font-size:.76rem}
+.books select{border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:6px 8px;font-family:var(--sans);font-size:.82rem;max-width:150px}
+.books li.off .tile{opacity:.35}
+.row-actions{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.btn{border:1px solid var(--line);background:transparent;border-radius:999px;padding:6px 14px;font-family:var(--sans);font-size:.85rem;cursor:pointer}
+.tabs{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:0 0 12px}
+.tabs button{border:1px solid var(--line);background:transparent;border-radius:10px;padding:9px;font-family:var(--sans);font-weight:700;cursor:pointer}
+.tabs button[aria-selected="true"],.tabs button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:.8rem;color:var(--muted);margin:0 0 10px;font-family:var(--sans)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.lg{width:12px;height:12px;border-radius:50%;background:var(--muted)}
+.lg.r{background:transparent;border:2.5px solid var(--muted)}
+.lg.f{background:transparent;border:2.5px dotted var(--muted)}
+.board{background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.head,.row,.sub{display:grid;grid-template-columns:minmax(112px,34%) 1fr;align-items:center}
+.head{position:sticky;top:env(safe-area-inset-top,0px);z-index:2;background:var(--panel);border-bottom:1px solid var(--line)}
+.cols{display:grid;grid-template-columns:repeat(var(--n),1fr);position:relative;height:100%}
+.head .cols div{text-align:center;padding:8px 0;font-family:var(--sans);line-height:1.05}
+.head .cols b{display:block;font-size:.78rem;color:var(--b)}
+.head .cols small{font-size:.62rem;color:var(--muted)}
+.row{border:0;border-bottom:1px solid var(--line);background:transparent;width:100%;text-align:left;padding:0;cursor:pointer}
+.row:last-child{border-bottom:0}
+.row:hover{background:color-mix(in srgb,var(--ink) 4%,transparent)}
+.who{display:flex;align-items:center;gap:8px;padding:7px 6px 7px 10px;min-width:0}
+.who .av{width:38px;height:38px}
+.who span{font-family:var(--sans);font-weight:500;font-size:.85rem;line-height:1.15;overflow-wrap:anywhere}
+.cell{display:grid;place-items:center;height:54px;position:relative;z-index:1}
+.cell.locked{background:repeating-linear-gradient(135deg,var(--lock) 0 4px,transparent 4px 9px)}
+.dot{width:15px;height:15px;border-radius:50%;background:var(--b)}
+.dot.n{width:19px;height:19px;box-shadow:0 0 0 3px color-mix(in srgb,var(--b) 30%,transparent)}
+.ring{width:15px;height:15px;border-radius:50%;border:2.5px solid var(--b);background:var(--panel)}
+.fam{width:15px;height:15px;border-radius:50%;border:2.5px dotted var(--b);background:var(--panel)}
+.thread{position:absolute;top:50%;height:2px;background:var(--ink);opacity:.22;transform:translateY(-1px)}
+.sub{font-family:var(--sans);font-weight:700;font-size:.8rem;color:var(--muted);padding:8px 10px;border-bottom:1px solid var(--line);background:var(--bg);display:block}
+.tabs.f{grid-template-columns:repeat(3,1fr)}
+.tabs.f button{font-weight:500;padding:7px}
+.empty{padding:22px;color:var(--muted);text-align:center}
+/* year view */
+.years{list-style:none;margin:0;padding:0 0 0 64px;position:relative}
+.years::before{content:"";position:absolute;left:52px;top:4px;bottom:4px;width:2px;background:var(--line)}
+.years li{position:relative;margin:0 0 14px}
+.years .yr{position:absolute;left:-64px;width:46px;text-align:right;font-family:var(--sans);font-weight:700;font-size:.82rem;top:12px;line-height:1.1}
+.years .yr small{display:block;font-weight:500;color:var(--muted);font-size:.66rem}
+.years li::before{content:"";position:absolute;left:-16px;top:16px;width:10px;height:10px;border-radius:50%;background:var(--b)}
+.moment{width:100%;text-align:left;background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--b);border-radius:10px;padding:9px 10px;display:grid;grid-template-columns:40px 1fr;gap:10px;cursor:pointer}
+.moment .av{width:40px;height:40px}
+.moment h3{margin:0;font-family:var(--sans);font-size:.92rem;line-height:1.2}
+.moment h3 small{display:block;color:var(--b);font-weight:500;font-size:.76rem}
+.moment p{margin:3px 0 0;font-size:.88rem;line-height:1.45}
+/* sheet */
+.scrim{position:fixed;inset:0;background:rgba(12,10,18,.45);opacity:0;pointer-events:none;transition:opacity .2s;z-index:10}
+.scrim.open{opacity:1;pointer-events:auto}
+.sheet{position:fixed;left:0;right:0;bottom:0;max-height:86%;overflow-y:auto;background:var(--panel);border-radius:20px 20px 0 0;padding:18px 18px calc(24px + env(safe-area-inset-bottom,0px));transform:translateY(105%);transition:transform .25s ease;z-index:11;max-width:780px;margin:0 auto}
+.sheet.open{transform:none}
+.close{position:absolute;top:12px;right:12px;width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--bg);font-size:1.2rem;cursor:pointer}
+.sheet-top{display:flex;gap:14px;align-items:center;margin:0 40px 12px 0}
+.sheet-top .av{width:72px;height:72px}
+.sheet h2{font-family:var(--sans);font-size:1.35rem;line-height:1.1;margin:0}
+.sheet .role{color:var(--muted);margin:3px 0 0;font-size:.92rem}
+.tl{list-style:none;margin:6px 0 0;padding:0 0 0 22px;position:relative}
+.tl::before{content:"";position:absolute;left:7px;top:8px;bottom:8px;width:2px;background:var(--line)}
+.tl li{position:relative;margin:0 0 16px}
+.tl li::before{content:"";position:absolute;left:-21px;top:6px;width:14px;height:14px;border-radius:50%;background:var(--b)}
+.tl li.m::before{background:var(--panel);border:2.5px solid var(--b)}
+.tl li.f::before{background:var(--panel);border:2.5px dotted var(--b)}
+.tl h3{font-family:var(--sans);font-size:.95rem;margin:0;line-height:1.3}
+.tl h3 small{display:block;color:var(--b);font-weight:500}
+.tl p{margin:3px 0 0;max-width:60ch}
+.reveal{margin-top:6px;font-family:var(--sans);font-size:.8rem;border:1px dashed var(--line);background:transparent;color:var(--muted);border-radius:8px;padding:4px 10px;cursor:pointer}
+.endtxt{border-left:3px solid var(--b);padding-left:10px;font-style:italic}
+.links h4{font-family:var(--sans);font-size:.9rem;margin:8px 0}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);background:var(--bg);border-radius:999px;padding:3px 12px 3px 3px;font-size:.85rem;cursor:pointer}
+.chip .av{width:28px;height:28px}
+.chip .badge{display:none}
+.chip small{color:var(--muted)}
+.av{display:block;flex:none;position:relative}
+.av>svg,.av>img{width:100%;height:100%;display:block}
+.av>img{object-fit:cover;border-radius:50%;background:var(--lock)}
+.av.t>img{border-radius:22%}
+.av.ai>svg{display:none}
+.av.ai.fail>svg{display:block}
+.av.ai.fail>img,.av.ai.fail>.badge{display:none}
+.badge{position:absolute;right:-4px;bottom:-3px;font:700 9px/1.4 var(--sans);background:var(--ink);color:var(--bg);border-radius:6px;padding:0 4px}
+.ai-cap{font-size:.8rem;color:var(--muted);margin:4px 0 0;font-style:italic}
+.count{font-family:var(--sans);font-size:.85rem;color:var(--muted);margin:0 0 10px}
+.switch{display:flex;align-items:center;gap:12px;cursor:pointer;font-family:var(--sans)}
+.switch input{position:absolute;opacity:0;width:1px;height:1px}
+.track{width:44px;height:26px;border-radius:999px;background:var(--line);position:relative;flex:none;transition:background .15s}
+.track::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:var(--panel);box-shadow:0 1px 2px rgba(0,0,0,.25);transition:transform .15s}
+.switch input:checked+.track{background:var(--btc)}
+.switch input:checked+.track::after{transform:translateX(18px)}
+.switch input:focus-visible+.track{outline:3px solid var(--ca);outline-offset:2px}
+.switch small{display:block;color:var(--muted);font-weight:500;font-size:.78rem}
+.ai-note{border-left:4px solid var(--btc)}
+.ai-note p{margin:0 0 8px;font-size:.92rem}
+.vote{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 10px}
+.btn.solid{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.fld{display:block;font-family:var(--sans);font-size:.85rem;margin:0 0 10px}
+.fld input,.fld select,.fld textarea{display:block;width:100%;margin-top:4px;font-family:var(--serif);font-size:1rem;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:8px;padding:8px}
+.thanks{font-family:var(--sans);font-weight:500;margin:6px 0 0}
+.err{color:var(--ta);font-family:var(--sans);font-size:.85rem;margin:6px 0 0}
+section.panel h2,.about h2{font-family:var(--sans);font-size:1.15rem;margin:0 0 6px;line-height:1.2}
+section.panel>p,.about p{margin:0 0 12px;font-size:.92rem;max-width:62ch}
+.about{margin-top:26px}
+footer{color:var(--muted);font-size:.8rem;margin-top:18px;max-width:62ch}
+@media (prefers-reduced-motion: reduce){.sheet,.scrim,.track,.track::after{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Mitchellverse: what comes back</h1>
+  <p class="lede">David Mitchell's novels share one world. People, places, ideas and even a magazine return in later books, sometimes 200 years later. Mark the books you have read, and only those appear.</p>
+
+  <div class="panel">
+    <p>Which books have you read?</p>
+    <ul class="books" id="books"></ul>
+    <div class="row-actions">
+      <button class="btn" type="button" id="all">Show everything (spoilers)</button>
+      <button class="btn" type="button" id="none">Hide everything</button>
+    </div>
+  </div>
+
+  <div class="panel">
+    <label class="switch"><input type="checkbox" id="aiToggle"><span class="track"></span><span>AI portraits<small>Test version. Off by default.</small></span></label>
+  </div>
+
+  <div class="panel ai-note" id="aiBanner" hidden>
+    <p><b>AI portraits are a work in progress.</b> These images are made with an AI image tool. They are probably not how you imagined these people and places when you read the books. Only a few are ready, and the others still use the drawings.</p>
+    <form name="ai-vote" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="voteForm">
+      <input type="hidden" name="form-name" value="ai-vote">
+      <input type="hidden" name="vote" id="voteVal">
+      <p hidden><label>Leave this empty <input name="bot-field"></label></p>
+      <p><b>Should I make more of them?</b></p>
+      <div class="vote">
+        <button class="btn solid" type="submit" data-v="yes">Yes, make more</button>
+        <button class="btn" type="submit" data-v="no">No, keep the drawings</button>
+      </div>
+      <label class="fld">Anything to add? (optional)<textarea name="comment" rows="2"></textarea></label>
+      <p class="err" id="voteErr" hidden>Could not send your vote. Check your connection and try again.</p>
+    </form>
+    <p class="thanks" id="voteThanks" hidden>Thank you. Your vote is saved.</p>
+  </div>
+
+  <div class="tabs" role="tablist">
+    <button type="button" role="tab" id="tBook" aria-selected="true">By book</button>
+    <button type="button" role="tab" id="tYear" aria-selected="false">By year in the story</button>
+  </div>
+
+  <div class="tabs f" role="group" aria-label="What to show">
+    <button type="button" data-f="all" aria-pressed="true">Both</button>
+    <button type="button" data-f="people" aria-pressed="false">People</button>
+    <button type="button" data-f="things" aria-pressed="false">Things</button>
+  </div>
+  <div class="legend">
+    <span><i class="lg"></i>Appears</span>
+    <span><i class="lg r"></i>Mentioned or remembered</span>
+    <span><i class="lg f"></i>A relative, a work, or an echo</span>
+  </div>
+  <p class="count" id="count" aria-live="polite"></p>
+  <div id="view"></div>
+
+  <p class="count" style="margin-top:10px">Tap any person, thing or moment for details. Notes about how a story ends stay covered until you tap them.</p>
+
+  <section class="panel" id="feedback" style="margin-top:24px">
+    <h2>Found a mistake or a missing link?</h2>
+    <p>Readers know these books better than any map. Tell me what is wrong or missing, for example a cameo such as Dwight Silverwind, Nurse Noakes or Felix Finch.</p>
+    <form name="correction" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="fbForm">
+      <input type="hidden" name="form-name" value="correction">
+      <p hidden><label>Leave this empty <input name="bot-field"></label></p>
+      <label class="fld">Book
+        <select name="book">
+          <option value="">Not sure or more than one</option>
+          <option>Ghostwritten</option><option>number9dream</option><option>Cloud Atlas</option><option>Black Swan Green</option>
+          <option>The Thousand Autumns of Jacob de Zoet</option><option>The Bone Clocks</option><option>Slade House</option><option>Utopia Avenue</option>
+        </select>
+      </label>
+      <label class="fld">What should change?<textarea name="message" rows="4" required></textarea></label>
+      <label class="fld">Your Reddit name (optional)<input name="reddit" autocomplete="off"></label>
+      <button class="btn solid" type="submit">Send</button>
+      <p class="err" id="fbErr" hidden>Could not send your message. Check your connection and try again.</p>
+    </form>
+    <p class="thanks" id="fbThanks" hidden>Thank you. I read every message.</p>
+  </section>
+
+  <section class="about">
+    <h2>About this map</h2>
+    <p>A free fan project by a reader of David Mitchell's books. It is not connected to the author or his publishers. All text is in my own words, and all drawings and icons are original. The map can contain mistakes, so please tell me when you find one.</p>
+  </section>
+</div>
+<div class="scrim" id="scrim"></div>
+<section class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetName"></section>
+
+<script>
+// AI portraits: put a square image (about 256x256 px, WebP) in the portraits folder,
+// then add one line here. Ids are the "id" values in the lists below.
+const PORTRAITS={
+  // marinus:"portraits/marinus.webp",
+  // esther:"portraits/esther.webp",
+  // dejima:"portraits/dejima.webp",
+};
+const BOOKS=[
+ {id:"gw",t:"Ghostwritten",ab:"GW",y:1999},
+ {id:"n9d",t:"number9dream",ab:"N9",y:2001},
+ {id:"ca",t:"Cloud Atlas",ab:"CA",y:2004},
+ {id:"bsg",t:"Black Swan Green",ab:"BSG",y:2006},
+ {id:"ta",t:"The Thousand Autumns of Jacob de Zoet",ab:"TA",y:2010},
+ {id:"btc",t:"The Bone Clocks",ab:"BC",y:2014,parts:6},
+ {id:"sh",t:"Slade House",ab:"SH",y:2015},
+ {id:"ua",t:"Utopia Avenue",ab:"UA",y:2020}
+];
+const FAIR="#F1D3BC",LIGHT="#E8BE9C",TAN="#C98E62",BROWN="#8E5A3A";
+// k: a appears, n narrator/main, m mentioned, f relative or work
+const C=[
+ {id:"marinus",name:"Marinus",home:"ta",role:"A soul that wakes in a new body after each death. A doctor in almost every life.",
+  av:{skin:LIGHT,hair:"short",hc:"#4A4A50",glasses:1},
+  e:[{b:"ta",y:1799,yl:"1799",k:"a",t:"Dr Lucas Marinus, a Dutch surgeon and scholar on Dejima, the trading island at Nagasaki. Rude, brilliant, and a friend to Jacob.",x:"He hints that he has lived before. This is one of his many lives."},
+     {b:"ua",y:1968,yl:"1968",k:"a",t:"A doctor who, together with Esther Little, helps Jasper with the knocking voice in his head. They tell Jasper about his ancestor Jacob."},
+     {b:"btc",p:1,y:1976,yl:"1970s",k:"m",t:"Holly remembers Dr Marinus, who touched her forehead and stopped the voices she heard as a child."},
+     {b:"sh",y:2015,yl:"2015",k:"a",t:"Dr Iris Marinus-Fenby walks into Slade House on purpose.",x:"The Grayer twins' trap turns against them."},
+     {b:"btc",p:5,y:2025,yl:"2025",k:"n",t:"Narrator, in the body of Dr Iris Fenby. Explains the secret war between Horologists and Anchorites."},
+     {b:"btc",p:6,y:2043,yl:"2043",k:"a",t:"Comes to Sheep's Head near the end of the book.",x:"Takes Lorelei and Rafiq away to safety."}]},
+ {id:"jacob",name:"Jacob de Zoet",home:"ta",role:"Young Dutch clerk with red hair, honest in a corrupt place.",
+  av:{skin:FAIR,hair:"short",hc:"#B5552C"},
+  e:[{b:"ta",y:1799,yl:"1799",k:"n",t:"Comes to Dejima to clean up the company's accounts. He falls for the midwife Orito Aibagawa."},
+     {b:"ua",y:1968,yl:"1968",k:"f",t:"His descendant Jasper plays guitar in Utopia Avenue. Jasper learns Jacob's story."}]},
+ {id:"enomoto",name:"Abbot Enomoto",home:"ta",role:"Head of a closed mountain shrine. Polite, powerful and very dangerous.",
+  av:{skin:TAN,hair:"bald",hc:"#000",old:1},
+  e:[{b:"ta",y:1800,yl:"1800",k:"a",t:"Takes Orito to his shrine on Mount Shiranui.",x:"His order steals life from others to stay alive. It is an early form of what the Anchorites do in The Bone Clocks."},
+     {b:"ua",y:1968,yl:"1968",k:"a",t:"A voice that knocks inside Jasper's head. Jasper calls it Knock Knock.",x:"The voice is Enomoto's spirit. It has moved down the de Zoet family line since Jacob."}]},
+ {id:"jasper",name:"Jasper de Zoet",home:"ua",role:"Guitarist of Utopia Avenue. Strange, gifted, haunted.",
+  av:{skin:FAIR,hair:"swept",hc:"#C9A867"},
+  e:[{b:"ua",y:1967,yl:"1967",k:"n",t:"One of the four band members who tell the story. A knocking voice has followed him since school."}]},
+ {id:"darnoq",name:"The D'Arnoqs",home:"ca",role:"A family name that crosses the Pacific and 150 years.",
+  av:{skin:LIGHT,hair:"short",hc:"#1F1A17"},
+  e:[{b:"ca",y:1850,yl:"1850",k:"a",t:"Mr D'Arnoq lives on the Chatham Islands. He tells Adam Ewing the story of the Moriori people."},
+     {b:"btc",p:2,y:1991,yl:"1991",k:"f",t:"Elijah D'Arnoq, a New Zealander at Cambridge, knows Hugo Lamb. Probably a descendant of the Chatham Islands D'Arnoq."},
+     {b:"btc",p:5,y:2025,yl:"2025",k:"f",t:"Elijah contacts Marinus and offers to change sides.",x:"It is a trap. His memories were faked to lead the Horologists into a fight."}]},
+ {id:"frobisher",name:"Robert Frobisher",home:"ca",role:"Young English composer with no money and great talent.",
+  av:{skin:FAIR,hair:"swept",hc:"#6B4A2E"},
+  e:[{b:"ca",y:1931,yl:"1931",k:"n",t:"Writes letters to his friend Sixsmith from Belgium, where he works for the old composer Vyvyan Ayrs. He composes the Cloud Atlas Sextet."},
+     {b:"ua",y:1967,yl:"1967",k:"f",t:"Jasper listens to a record of the Cloud Atlas Sextet."}]},
+ {id:"eva",name:"Eva Crommelynck",home:"ca",role:"Daughter of Vyvyan Ayrs. Clever, sharp-tongued.",
+  av:{skin:FAIR,hair:"bob",hc:"#B08B57"},
+  e:[{b:"ca",y:1931,yl:"1931",k:"a",t:"A teenager at her father's house in Belgium. Frobisher falls for her."},
+     {b:"bsg",y:1982,yl:"1982",k:"a",t:"Madame Eva van Outryve de Crommelynck, now an old woman in England. She reads young Jason's poems and gives him honest advice."}]},
+ {id:"luisa",name:"Luisa Rey",home:"gw",role:"Brave reporter. First a voice on the radio, then a heroine.",
+  av:{skin:TAN,hair:"long",hc:"#1C1614"},
+  e:[{b:"gw",y:1998,yl:"1990s",k:"a",t:"She phones in to Bat Segundo's late-night radio show in New York."},
+     {b:"ua",y:1968,yl:"1968",k:"a",t:"A young reporter for Spyglass magazine. She meets the band and falls in love with Elf Holloway."},
+     {b:"ca",y:1975,yl:"1975",k:"n",t:"Reporter for Spyglass in Buenas Yerbas, California. She investigates a dangerous nuclear power plant."}]},
+ {id:"bat",name:"Bat Segundo",home:"gw",role:"Late-night radio host.",
+  av:{skin:LIGHT,hair:"curly",hc:"#241B16",glasses:1},
+  e:[{b:"gw",y:1998,yl:"1990s",k:"a",t:"Hosts the Night Train radio show in New York. A strange caller keeps phoning in."},
+     {b:"ua",y:1968,yl:"1968",k:"a",t:"A radio personality in the band's world."}]},
+ {id:"cavendish",name:"Timothy Cavendish",home:"gw",role:"London publisher, vain and very funny.",
+  av:{skin:FAIR,hair:"balding",hc:"#DDD8CF",old:1},
+  e:[{b:"gw",y:1998,yl:"1990s",k:"a",t:"A small part in the London section."},
+     {b:"ca",y:2004,yl:"2000s",k:"n",t:"Narrator of his own ordeal. He is locked by mistake in an old people's home and plans an escape."}]},
+ {id:"mo",name:"Mo Muntervary",home:"gw",role:"Irish quantum physicist.",
+  av:{skin:FAIR,hair:"short",hc:"#CFCBC4",old:1,glasses:1},
+  e:[{b:"gw",y:1998,yl:"1990s",k:"n",t:"Runs from people who want to use her work for weapons, back to her home on Clear Island in Ireland."},
+     {b:"btc",p:6,y:2043,yl:"2043",k:"a",t:"Very old now. Holly's neighbour at Sheep's Head."}]},
+ {id:"hugo",name:"Hugo Lamb",home:"bsg",role:"Charming, clever and cold.",
+  av:{skin:FAIR,hair:"swept",hc:"#D8BE7E"},
+  e:[{b:"bsg",y:1982,yl:"1982",k:"a",t:"Jason Taylor's older cousin. Cool and smooth. Jason admires him and is a little afraid of him."},
+     {b:"btc",p:2,y:1991,yl:"1991",k:"n",t:"Narrator. A Cambridge student who cheats people. In Switzerland he falls for Holly Sykes.",x:"He accepts the Anchorites' offer and leaves Holly."},
+     {b:"btc",p:4,y:2018,yl:"2010s",k:"a",t:"Comes back in Crispin's story, and he has not aged.",x:"In Iceland he questions Crispin about Holly, then erases his memory."},
+     {b:"btc",p:5,y:2025,yl:"2025",k:"a",t:"An Anchorite now. He meets Holly again.",x:"He stays behind with Marinus and says he truly loved Holly."}]},
+ {id:"ed",name:"Ed Brubeck",home:"btc",role:"Holly's schoolmate, later a war reporter and her partner.",
+  av:{skin:LIGHT,hair:"short",hc:"#2E2621"},
+  e:[{b:"btc",p:1,y:1984,yl:"1984",k:"a",t:"Holly's classmate in Gravesend. He tells her about the strawberry farm."},
+     {b:"btc",p:3,y:2004,yl:"2004",k:"n",t:"Narrator. A war reporter for Spyglass magazine, the same magazine Luisa Rey worked for. Home from Iraq for Sharon Sykes's wedding."}]},
+ {id:"esther",name:"Esther Little",home:"btc",role:"One of the oldest Horologists.",
+  av:{skin:TAN,hair:"bun",hc:"#E9E4DA",old:1},
+  e:[{b:"ua",y:1968,yl:"1968",k:"a",t:"With Marinus, she helps Jasper with the voice in his head."},
+     {b:"btc",p:1,y:1984,yl:"1984",k:"a",t:"An old woman by the Thames. She gives Holly tea and asks for \u201casylum\u201d.",x:"She uses the asylum Holly promised."},
+     {b:"btc",p:5,y:2025,yl:"2025",k:"a",t:"Sends messages to Marinus, though everyone thought she was dead.",x:"She was hiding in Holly's memory since 1984."}]},
+ {id:"crispin",name:"Crispin Hershey",home:"btc",role:"Son of a film director, later a bitter novelist.",
+  av:{skin:LIGHT,hair:"short",hc:"#8D8A86",beard:1},
+  e:[{b:"ua",y:1968,yl:"1968",k:"a",t:"A small boy the band meets at a party in London."},
+     {b:"btc",p:4,y:2015,yl:"2015\u201320",k:"n",t:"Narrator. A novelist whose career is going down. He becomes Holly's friend."}]},
+ {id:"levon",name:"Levon Frankland",home:"ua",role:"Band manager with good taste and big plans.",
+  av:{skin:FAIR,hair:"balding",hc:"#6A5644",glasses:1},
+  e:[{b:"ua",y:1967,yl:"1967",k:"a",t:"Brings Dean, Elf, Jasper and Griff together as Utopia Avenue and manages them."},
+     {b:"btc",p:4,y:2016,yl:"2010s",k:"a",t:"Old now. He meets Crispin and remembers that a band he managed once planned music for a film by Crispin's father."}]}
+];
+
+const T=[
+ {id:"spyglass",name:"Spyglass magazine",home:"ca",icon:"mag",role:"An American magazine that hires brave reporters.",
+  e:[{b:"ua",y:1968,yl:"1968",k:"a",t:"Luisa Rey already works for Spyglass when she meets Utopia Avenue."},
+     {b:"ca",y:1975,yl:"1975",k:"a",t:"Luisa Rey writes for Spyglass while she investigates the nuclear power plant."},
+     {b:"btc",p:3,y:2004,yl:"2004",k:"a",t:"Ed Brubeck reports from Iraq for Spyglass."}]},
+ {id:"sextet",name:"Cloud Atlas Sextet",home:"ca",icon:"music",role:"A piece of music by Robert Frobisher. It gives Cloud Atlas its name.",
+  e:[{b:"ca",y:1931,yl:"1931",k:"n",t:"Frobisher composes it in Belgium, in the house of Vyvyan Ayrs."},
+     {b:"ua",y:1967,yl:"1967",k:"a",t:"Jasper listens to a rare recording of it."},
+     {b:"ca",y:1975,yl:"1975",k:"a",t:"Luisa Rey hears it in a record shop and feels she already knows it."}]},
+ {id:"dejima",name:"Dejima",home:"ta",icon:"fan",role:"A small fan-shaped island in Nagasaki harbour. The Dutch trading post in Japan (a real place).",
+  e:[{b:"ta",y:1799,yl:"1799",k:"n",t:"The main setting. Jacob and Dr Marinus live and work there."},
+     {b:"ua",y:1968,yl:"1968",k:"m",t:"Marinus and Esther tell Jasper what happened to his ancestor there."},
+     {b:"btc",p:5,y:2025,yl:"2025",k:"m",t:"Marinus remembers a past life as a surgeon and scholar there."}]},
+ {id:"horology",name:"Horology",home:"ta",icon:"glass",role:"Souls that come back in new bodies naturally, and fight those who steal souls.",
+  e:[{b:"ta",y:1799,yl:"1799",k:"f",t:"Dr Marinus is already one of them, but the book only hints at it."},
+     {b:"ua",y:1968,yl:"1968",k:"a",t:"Marinus and Esther Little help Jasper."},
+     {b:"sh",y:2015,yl:"2015",k:"a",t:"Marinus comes to Slade House."},
+     {b:"btc",p:5,y:2025,yl:"2025",k:"n",t:"Marinus explains Horology and gathers the Horologists for one big attack."}]},
+ {id:"souleaters",name:"Soul-eaters",home:"ta",icon:"wine",role:"People who steal souls to live forever. The Bone Clocks calls them Anchorites, or Carnivores.",
+  e:[{b:"ta",y:1800,yl:"1800",k:"a",t:"Abbot Enomoto's order on Mount Shiranui keeps a dark secret about long life.",x:"Later books show it is the same kind of evil as the Anchorites."},
+     {b:"ua",y:1968,yl:"1968",k:"a",t:"The knocking voice in Jasper's head comes from an old enemy.",x:"It is the spirit of Abbot Enomoto."},
+     {b:"sh",y:1979,yl:"1979",k:"n",t:"Every nine years the Grayer twins pull a guest into Slade House.",x:"They feed on the guest's soul to stay alive."},
+     {b:"btc",p:2,y:1991,yl:"1991",k:"a",t:"Hugo meets people who say they have found a way to cheat death.",x:"They are the Anchorites, and Hugo joins them."},
+     {b:"btc",p:5,y:2025,yl:"2025",k:"a",t:"Marinus explains how the Anchorites stay young: they drain the souls of gifted people into Black Wine."}]},
+ {id:"noncorpum",name:"Souls without bodies",home:"gw",icon:"wisp",role:"A soul that lives inside other people. Later books call it a noncorpum.",
+  e:[{b:"gw",y:1998,yl:"1990s",k:"n",t:"The narrator of the Mongolia section is a soul without a body. It moves from host to host and looks for where it came from."},
+     {b:"ua",y:1968,yl:"1968",k:"a",t:"Knock Knock is a soul without a body that lives in Jasper."},
+     {b:"btc",p:5,y:2025,yl:"2025",k:"a",t:"Marinus explains how a soul can hide inside another person.",x:"Esther Little hid in Holly's mind like this since 1984."}]},
+ {id:"panopticon",name:"PanOpticon",home:"n9d",icon:"tower",role:"A building in Tokyo, and later a film.",
+  e:[{b:"n9d",y:2000,yl:"c. 2000",k:"n",t:"Eiji Miyake waits in a caf\u00e9 across from the PanOpticon building. Inside is someone who knows who his father is."},
+     {b:"ua",y:1968,yl:"1968",k:"f",t:"Jasper watches a film called PanOpticon. Mitchell repeats a full paragraph from number9dream here."}]},
+ {id:"prescience",name:"Prescience",home:"ca",icon:"eye",role:"A group that keeps science alive while the world falls.",
+  e:[{b:"btc",p:6,y:2043,yl:"2043",k:"a",t:"You get a glimpse of Prescience as the old world falls apart."},
+     {b:"ca",y:2300,yl:"far future",k:"a",t:"The Prescients come to Hawaii from a high-tech place to study the world after the Fall."}]}
+];
+T.forEach(t=>t.kind="thing");C.forEach(c=>c.kind="person");C.push(...T);
+const LINKS=[
+ ["marinus","jacob","ta","teacher and friend"],["jacob","enomoto","ta","enemies"],["marinus","enomoto","ta","enemies"],
+ ["jacob","jasper","ua","ancestor"],["enomoto","jasper","ua","Knock Knock"],["marinus","jasper","ua","helps him"],["esther","jasper","ua","helps him"],
+ ["marinus","esther","ua","fellow Horologist"],["frobisher","jasper","ua","his music"],["luisa","bat","gw","radio caller"],
+ ["frobisher","eva","ca","in love"],["luisa","ed","btc","both write for Spyglass",3],
+ ["spyglass","luisa","ca","reporter"],["spyglass","luisa","ua","reporter"],["spyglass","ed","btc","reporter",3],
+ ["sextet","frobisher","ca","composer"],["sextet","luisa","ca","hears it"],["sextet","jasper","ua","listens"],
+ ["dejima","jacob","ta","works there"],["dejima","marinus","ta","works there"],
+ ["horology","marinus","ta","member"],["horology","esther","ua","member"],
+ ["souleaters","enomoto","ta","one of them"],["souleaters","hugo","btc","joins them",2],["souleaters","darnoq","btc","one of them",2],
+ ["noncorpum","jasper","ua","Knock Knock"],["noncorpum","esther","btc","hides like this",5],["noncorpum","enomoto","ua","Knock Knock"],
+ ["panopticon","jasper","ua","watches the film"],["crispin","levon","btc","old memories",4],["hugo","crispin","btc","Iceland",4],
+ ["hugo","darnoq","btc","Cambridge",2],["darnoq","marinus","btc","false offer",5],["mo","marinus","btc","Sheep's Head",6],
+ ["luisa","jasper","ua","same band world"],["crispin","luisa","ua","same party world"]
+].filter(l=>!(l[0]==="luisa"&&l[1]==="jasper")&&!(l[0]==="crispin"&&l[1]==="luisa"));
+
+const byId=Object.fromEntries(C.map(c=>[c.id,c])),bookById=Object.fromEntries(BOOKS.map(b=>[b.id,b]));
+// state: 0 not read, 1..parts reading part, 99 finished
+let st={};BOOKS.forEach(b=>st[b.id]=b.id==="btc"?1:0);const NB=BOOKS.length;
+try{const s=JSON.parse(localStorage.getItem("mv-state")||"null");if(s)Object.assign(st,s)}catch(e){}
+let flt="all";try{flt=localStorage.getItem("mv-flt")||"all"}catch(e){}
+let aiOn=false;try{aiOn=localStorage.getItem("mv-ai")==="1"}catch(e){}
+let view="book";try{view=localStorage.getItem("mv-view")||"book"}catch(e){}
+const save=()=>{try{localStorage.setItem("mv-state",JSON.stringify(st));localStorage.setItem("mv-view",view);localStorage.setItem("mv-flt",flt);localStorage.setItem("mv-ai",aiOn?"1":"0")}catch(e){}};
+const visE=e=>{const s=st[e.b];if(!s)return false;if(s===99)return true;return e.p?e.p<=s:false};
+const visLink=l=>{const s=st[l[2]];if(!s)return false;if(s===99)return true;return l[4]?l[4]<=s:false};
+const ok=id=>byId[id].e.some(visE);
+const inF=c=>flt==="all"||(flt==="people"?c.kind==="person":c.kind==="thing");
+
+let uid=0;
+const ICONS={
+ mag:'<rect x="16" y="12" width="16" height="23" rx="2"/><path d="M19.5 17h9M19.5 21h9M19.5 25h6M19.5 29h7"/>',
+ music:'<circle cx="18.5" cy="31" r="3.2"/><circle cx="29.5" cy="28.5" r="3.2"/><path d="M21.7 31V16l11-2.5v15"/><path d="M21.7 20l11-2.5"/>',
+ fan:'<path d="M24 33L12.5 21.5A16 16 0 0 1 35.5 21.5Z"/><path d="M15.5 25.5h17"/>',
+ glass:'<path d="M17 12h14M17 36h14M18 12q0 9 6 12q6 3 6 12M30 12q0 9-6 12q-6 3-6 12"/>',
+ wine:'<path d="M17.5 12h13q0 11-6.5 12.5Q17.5 23 17.5 12Z"/><path d="M24 24.5V34M19 35h10"/><path d="M18.3 16.5h11.4" stroke-width="3.2"/>',
+ wisp:'<path d="M24 13c-5 0-8 3.5-8 8 0 6 4 8 4 13 2-2 3-2 4 0 1-2 2-2 4 0 0-5 4-7 4-13 0-4.5-3-8-8-8Z"/><circle cx="21" cy="21" r=".8"/><circle cx="27" cy="21" r=".8"/>',
+ tower:'<path d="M18 36V12h12v24M15 36h18"/><path d="M21 16h1M26 16h1M21 21h1M26 21h1M21 26h1M26 26h1M23 31h2"/>',
+ eye:'<path d="M12 24q12-12 24 0q-12 12-24 0Z"/><circle cx="24" cy="24" r="3.6"/>'
+};
+function drawn(c){
+  if(c.icon){const col=`var(--${c.home})`;return `<svg viewBox="0 0 48 48" aria-hidden="true"><rect x="1" y="1" width="46" height="46" rx="12" fill="${col}" fill-opacity=".18"/><g fill="none" stroke="${col}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">${ICONS[c.icon]}</g><rect x="1" y="1" width="46" height="46" rx="12" fill="none" stroke="${col}" stroke-width="2"/></svg>`}
+  const a=c.av,id="cl"+(uid++),col=`var(--${c.home})`,r=9,cy=21.5,hc=a.hc;
+  let back="",front="";
+  const fringe=`<path d="M15 20.5Q15.5 11 24 11Q32.5 11 33 20.5Q29.5 15 24 15.5Q18.5 15 15 20.5Z" fill="${hc}"/>`;
+  switch(a.hair){
+    case"long":back=`<path d="M13.5 23Q12.5 9 24 9Q35.5 9 34.5 23L36 38H12Z" fill="${hc}"/>`;front=fringe;break;
+    case"bob":back=`<path d="M14 22Q14 9 24 9Q34 9 34 22L34.5 29.5H13.5Z" fill="${hc}"/>`;front=fringe;break;
+    case"short":front=`<path d="M14.8 21Q14 10.5 24 10.5Q34 10.5 33.2 21Q32 15 24 14.6Q16 15 14.8 21Z" fill="${hc}"/>`;break;
+    case"swept":front=`<path d="M14.8 21Q13 9.5 25 9.6Q35 10 33.3 19.5Q31 13.5 22 14.2Q17 15 14.8 21Z" fill="${hc}"/>`;break;
+    case"bun":front=`<circle cx="24" cy="9.5" r="4.2" fill="${hc}"/><path d="M15 20Q15 11.5 24 11.5Q33 11.5 33 20Q30 15.5 24 15.6Q18 15.5 15 20Z" fill="${hc}"/>`;break;
+    case"curly":front=[[16,16],[18.5,12],[24,10.2],[29.5,12],[32,16],[15.2,20.5],[32.8,20.5]].map(p=>`<circle cx="${p[0]}" cy="${p[1]}" r="3.8" fill="${hc}"/>`).join("");break;
+    case"balding":front=`<path d="M14.8 23Q14.2 17 16.8 15.2L17.6 21.5Z M33.2 23Q33.8 17 31.2 15.2L30.4 21.5Z" fill="${hc}"/>`;break;
+    case"bald":front="";break;
+  }
+  const ink="#2A2320",ey=cy+.5;
+  let face=`<circle cx="20.6" cy="${ey}" r="1.05" fill="${ink}"/><circle cx="27.4" cy="${ey}" r="1.05" fill="${ink}"/><path d="M21.6 ${cy+4.6}Q24 ${cy+6.2} 26.4 ${cy+4.6}" stroke="${ink}" stroke-width="1" fill="none" stroke-linecap="round"/>`;
+  if(a.old)face+=`<path d="M18.6 ${ey+2}q2 .9 4 0M25.4 ${ey+2}q2 .9 4 0" stroke="${ink}" stroke-opacity=".35" stroke-width=".7" fill="none"/>`;
+  const beard=a.beard?`<path d="M15.6 ${cy+1}Q16.5 ${cy+9.6} 24 ${cy+9.6}Q31.5 ${cy+9.6} 32.4 ${cy+1}Q30.5 ${cy+6.6} 24 ${cy+7}Q17.5 ${cy+6.6} 15.6 ${cy+1}Z" fill="${hc}"/>`:"";
+  const gl=a.glasses?`<g fill="none" stroke="${ink}" stroke-width=".9"><circle cx="20.6" cy="${ey}" r="2.7"/><circle cx="27.4" cy="${ey}" r="2.7"/><path d="M23.3 ${ey}h1.4"/></g>`:"";
+  return `<svg viewBox="0 0 48 48" aria-hidden="true"><defs><clipPath id="${id}"><circle cx="24" cy="24" r="24"/></clipPath></defs><g clip-path="url(#${id})"><rect width="48" height="48" fill="${col}" fill-opacity=".2"/>${back}<rect x="21" y="${cy+6}" width="6" height="7" fill="${a.skin}"/><path d="M7 50Q8 ${cy+12} 24 ${cy+11.5}Q40 ${cy+12} 41 50Z" fill="${col}"/><circle cx="24" cy="${cy}" r="${r}" fill="${a.skin}"/>${beard}${front}${face}${gl}</g><circle cx="24" cy="24" r="23" fill="none" stroke="${col}" stroke-width="2"/></svg>`;
+}
+
+function avatar(c){
+  const svg=drawn(c),src=aiOn&&PORTRAITS[c.id],cls="av"+(c.icon?" t":"");
+  if(!src)return `<span class="${cls}">${svg}</span>`;
+  return `<span class="${cls} ai"><img src="${src}" alt="" loading="lazy" decoding="async" onerror="this.parentNode.classList.add('fail')">${svg}<b class="badge">AI</b></span>`;
+}
+function renderBooks(){
+  document.getElementById("books").innerHTML=BOOKS.map(b=>{
+    let opts=`<option value="0">Not read</option>`;
+    if(b.parts)for(let i=1;i<=b.parts;i++)opts+=`<option value="${i}">Reading part ${i}</option>`;
+    opts+=`<option value="99">Read</option>`;
+    return `<li class="${st[b.id]?"":"off"}" style="--b:var(--${b.id})"><span class="tile">${b.ab}</span><span class="nm">${b.t}<small>${b.y}</small></span><select data-b="${b.id}" aria-label="${b.t}">${opts.replace(`value="${st[b.id]}"`,`value="${st[b.id]}" selected`)}</select></li>`;
+  }).join("");
+}
+function renderBoard(){
+  const ord=(a,b)=>BOOKS.findIndex(x=>x.id===a.home)-BOOKS.findIndex(x=>x.id===b.home);
+  const vp=C.filter(c=>c.kind==="person"&&inF(c)&&ok(c.id)).sort(ord),vt=C.filter(c=>c.kind==="thing"&&inF(c)&&ok(c.id)).sort(ord);
+  const vis=[...vp,...vt];
+  let h=`<div class="board" style="--n:${NB}"><div class="head"><div style="padding:8px 10px;font-family:var(--sans);font-size:.75rem;color:var(--muted)">Book</div><div class="cols">${BOOKS.map(b=>`<div style="--b:var(--${b.id})"><b>${b.ab}</b><small>${b.y}</small></div>`).join("")}</div></div>`;
+  if(!vis.length)h+=`<div class="empty">Mark a book as read to see its people.</div>`;
+  h+=vis.map((c,ci)=>{
+    const sub=(ci===0&&vp.length&&flt==="all")?`<div class="sub">People</div>`:(ci===vp.length&&vt.length&&flt==="all")?`<div class="sub">Places, things and ideas</div>`:"";
+    let idx=[],cells="";
+    BOOKS.forEach((b,i)=>{
+      if(!st[b.id]){cells+=`<div class="cell locked"></div>`;return}
+      const es=c.e.filter(e=>e.b===b.id&&visE(e));
+      let mk="";
+      if(es.length){idx.push(i);const k=es.some(e=>e.k==="n")?"n":es.some(e=>e.k==="a")?"a":es[0].k;mk=k==="m"?`<i class="ring"></i>`:k==="f"?`<i class="fam"></i>`:`<i class="dot${k==="n"?" n":""}"></i>`}
+      cells+=`<div class="cell" style="--b:var(--${b.id})">${mk}</div>`;
+    });
+    const lo=Math.min(...idx),hi=Math.max(...idx);
+    const th=hi>lo?`<i class="thread" style="left:${(lo+.5)/NB*100}%;width:${(hi-lo)/NB*100}%"></i>`:"";
+    return sub+`<button class="row" type="button" data-id="${c.id}" aria-label="${c.name}"><div class="who">${avatar(c)}<span>${c.name}</span></div><div class="cols">${th}${cells}</div></button>`;
+  }).join("");
+  return h+"</div>";
+}
+function renderYears(){
+  const m=[];C.filter(inF).forEach(c=>c.e.forEach(e=>{if(visE(e))m.push({c,e})}));
+  m.sort((a,b)=>a.e.y-b.e.y);
+  if(!m.length)return `<div class="board empty">Mark a book as read to see its moments.</div>`;
+  return `<ul class="years">${m.map(({c,e})=>{const b=bookById[e.b];
+    return `<li style="--b:var(--${b.id})"><span class="yr">${e.yl}</span><button class="moment" type="button" data-id="${c.id}">${avatar(c)}<span><h3>${c.name}<small>${b.t}${e.p?", part "+e.p:""}</small></h3><p>${e.t}</p></span></button></li>`}).join("")}</ul>`;
+}
+function render(){
+  renderBooks();
+  document.getElementById("view").innerHTML=view==="book"?renderBoard():renderYears();
+  document.getElementById("tBook").setAttribute("aria-selected",view==="book");
+  document.getElementById("tYear").setAttribute("aria-selected",view==="year");
+  document.querySelectorAll("[data-f]").forEach(b=>b.setAttribute("aria-pressed",b.dataset.f===flt));
+  const np=C.filter(c=>c.kind==="person"&&inF(c)&&ok(c.id)).length,nt=C.filter(c=>c.kind==="thing"&&inF(c)&&ok(c.id)).length,nb=BOOKS.filter(b=>st[b.id]).length;
+  document.getElementById("count").textContent=nb?`Showing ${np} ${np===1?"person":"people"} and ${nt} ${nt===1?"thing":"things"} from ${nb} ${nb===1?"book":"books"}.`:"";
+  document.getElementById("aiToggle").checked=aiOn;
+  const voted=(()=>{try{return localStorage.getItem("mv-voted")==="1"}catch(e){return false}})();
+  document.getElementById("aiBanner").hidden=!aiOn;
+  document.getElementById("voteForm").hidden=voted;document.getElementById("voteThanks").hidden=!voted;
+}
+
+const sheet=document.getElementById("sheet"),scrim=document.getElementById("scrim");let lastF=null;
+function openSheet(id){
+  const c=byId[id];lastF=document.activeElement;
+  const es=c.e.filter(visE).sort((a,b)=>a.y-b.y);
+  const tl=es.map(e=>{const b=bookById[e.b];const kind=(c.kind==="thing"?{a:"appears",n:"central",m:"mentioned",f:"echo"}:{a:"appears",n:"main character",m:"mentioned",f:"relative or work"})[e.k];
+    return `<li class="${e.k==="m"?"m":e.k==="f"?"f":""}" style="--b:var(--${b.id})"><h3>${e.yl}<small>${b.t}${e.p?", part "+e.p:""} (${kind})</small></h3><p>${e.t}</p>${e.x?`<button class="reveal" type="button">Show how this story ends for them</button><p class="endtxt" hidden>${e.x}</p>`:""}</li>`}).join("");
+  const links=LINKS.filter(l=>(l[0]===id||l[1]===id)&&visLink(l)).map(l=>{const o=byId[l[0]===id?l[1]:l[0]];if(!ok(o.id))return"";
+    return `<button class="chip" type="button" data-id="${o.id}">${avatar(o)}<span>${o.name} <small>${l[3]}, ${bookById[l[2]].ab}</small></span></button>`}).join("");
+  sheet.innerHTML=`<button class="close" type="button" aria-label="Close">\u00d7</button><div class="sheet-top">${avatar(c)}<div><h2 id="sheetName">${c.name}</h2><p class="role">${c.role}</p>${aiOn&&PORTRAITS[c.id]?`<p class="ai-cap">AI-generated image. Probably not how you imagined it.</p>`:""}</div></div><ul class="tl">${tl}</ul>${links?`<div class="links"><h4>Connected to</h4><div class="chips">${links}</div></div>`:""}`;
+  sheet.scrollTop=0;sheet.classList.add("open");scrim.classList.add("open");sheet.querySelector(".close").focus();
+}
+function closeSheet(){sheet.classList.remove("open");scrim.classList.remove("open");if(lastF)lastF.focus()}
+
+document.getElementById("books").addEventListener("change",e=>{const s=e.target.closest("select");if(!s)return;st[s.dataset.b]=Number(s.value);save();render()});
+document.getElementById("all").onclick=()=>{BOOKS.forEach(b=>st[b.id]=99);save();render()};
+document.getElementById("none").onclick=()=>{BOOKS.forEach(b=>st[b.id]=0);save();render()};
+document.getElementById("tBook").onclick=()=>{view="book";save();render()};
+document.querySelectorAll("[data-f]").forEach(b=>b.onclick=()=>{flt=b.dataset.f;save();render()});
+document.getElementById("tYear").onclick=()=>{view="year";save();render()};
+document.getElementById("view").addEventListener("click",e=>{const r=e.target.closest("[data-id]");if(r)openSheet(r.dataset.id)});
+sheet.addEventListener("click",e=>{if(e.target.closest(".close"))return closeSheet();const rv=e.target.closest(".reveal");if(rv){rv.nextElementSibling.hidden=false;rv.remove();return}const ch=e.target.closest(".chip");if(ch)openSheet(ch.dataset.id)});
+scrim.addEventListener("click",closeSheet);
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&sheet.classList.contains("open"))closeSheet()});
+document.getElementById("aiToggle").addEventListener("change",e=>{aiOn=e.target.checked;save();render()});
+const LOCAL=/^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname);
+async function send(form){
+  if(LOCAL){console.info("[local preview] form not sent:",Object.fromEntries(new FormData(form)));return}
+  const r=await fetch("/",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:new URLSearchParams(new FormData(form)).toString()});
+  if(!r.ok)throw new Error("HTTP "+r.status);
+}
+const voteForm=document.getElementById("voteForm");let voteChoice="";
+voteForm.querySelectorAll("[data-v]").forEach(b=>b.addEventListener("click",()=>{voteChoice=b.dataset.v}));
+voteForm.addEventListener("submit",async e=>{
+  e.preventDefault();if(!voteChoice)return;
+  document.getElementById("voteVal").value=voteChoice;document.getElementById("voteErr").hidden=true;
+  try{await send(voteForm);try{localStorage.setItem("mv-voted","1")}catch(err){}render()}
+  catch(err){document.getElementById("voteErr").hidden=false}
+});
+const fbForm=document.getElementById("fbForm");
+fbForm.addEventListener("submit",async e=>{
+  e.preventDefault();document.getElementById("fbErr").hidden=true;
+  try{await send(fbForm);fbForm.hidden=true;document.getElementById("fbThanks").hidden=false}
+  catch(err){document.getElementById("fbErr").hidden=false}
+});
+render();
+</script>
+</body>
+</html>
