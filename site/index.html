@@ -122,8 +122,26 @@ h1 span{display:block;font-style:italic;font-weight:400;color:var(--sun)}
 .legend{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 16px;font-size:.8rem;color:var(--muted);margin:0 0 8px;font-family:var(--sans);font-weight:500}
 .legend span{display:inline-flex;align-items:center;gap:6px}
 .lg{width:13px;height:13px;border-radius:50%;background:var(--muted);border:2px solid var(--edge)}
+.lg.n{width:17px;height:17px;box-shadow:2px 2px 0 var(--edge)}
 .lg.r{background:transparent;border:2.5px solid var(--muted)}
 .lg.f{background:transparent;border:2.5px dotted var(--muted)}
+/* search */
+.search{position:relative;max-width:460px;margin:0 auto 14px}
+.search svg{position:absolute;left:14px;top:50%;width:19px;height:19px;transform:translateY(-50%);fill:none;stroke:var(--muted);stroke-width:2.2;stroke-linecap:round;pointer-events:none}
+.search input{width:100%;font-family:var(--sans);font-weight:500;font-size:1rem;color:var(--ink);background:var(--panel);border:2px solid var(--edge);border-radius:999px;padding:10px 46px 10px 42px;box-shadow:3px 3px 0 var(--edge);-webkit-appearance:none;appearance:none}
+.search input::placeholder{color:var(--muted)}
+.search input::-webkit-search-cancel-button{display:none}
+.search input:focus{outline:none;box-shadow:3px 3px 0 var(--edge),0 0 0 3px var(--pink)}
+.search .clr{position:absolute;right:7px;top:50%;transform:translateY(-50%);width:30px;height:30px;border-radius:50%;border:2px solid var(--edge);background:var(--lock);color:var(--ink);display:grid;place-items:center;padding:0;cursor:pointer}
+.search .clr svg{position:static;transform:none;width:13px;height:13px;stroke:currentColor;stroke-width:2.8}
+.search .clr[hidden]{display:none}
+/* snackbar */
+.snack{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:40;display:flex;align-items:center;gap:10px;width:max-content;max-width:calc(100% - 32px);background:var(--hero);color:#F4F1E8;border:2px solid var(--edge);border-radius:14px;padding:11px 16px;box-shadow:4px 4px 0 var(--edge);font-family:var(--sans);font-weight:600;font-size:.92rem;line-height:1.3;transform:translate(-50%,calc(100% + 40px));opacity:0;transition:transform .3s cubic-bezier(.3,1.3,.6,1),opacity .2s;pointer-events:none}
+.snack.show{transform:translate(-50%,0);opacity:1}
+.snack i{flex:none;width:24px;height:24px;border-radius:50%;background:var(--mint);border:2px solid var(--edge);display:grid;place-items:center;color:#1B2238}
+.snack.bad i{background:var(--pink)}
+.snack svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.btn:disabled{opacity:.6;cursor:wait;transform:none}
 /* the map */
 .board{background:var(--panel);border:2px solid var(--edge);border-radius:16px;overflow:hidden;box-shadow:5px 5px 0 var(--edge)}
 .head,.row,.sub{display:grid;grid-template-columns:minmax(112px,34%) 1fr;align-items:center}
@@ -156,6 +174,9 @@ h1 span{display:block;font-style:italic;font-weight:400;color:var(--sun)}
 .years .yr{position:absolute;left:-72px;width:46px;text-align:center;font-family:var(--sans);font-weight:800;font-size:.76rem;top:12px;line-height:1.1;background:var(--panel);border:2px solid var(--edge);border-radius:8px;padding:3px 0;box-shadow:2px 2px 0 var(--edge)}
 .years .yr small{display:block;font-weight:600;color:var(--muted);font-size:.6rem}
 .years li::before{content:"";position:absolute;left:-22px;top:17px;width:14px;height:14px;border-radius:50%;background:var(--b);border:2.5px solid var(--edge)}
+.years li.n::before{left:-25px;top:14px;width:20px;height:20px;box-shadow:2px 2px 0 var(--edge)}
+.years li.m::before{background:var(--panel);border:3px solid var(--b);box-shadow:0 0 0 1.5px var(--edge)}
+.years li.f::before{background:var(--panel);border:3px dotted var(--b)}
 .moment{width:100%;text-align:left;background:var(--panel);border:2px solid var(--edge);border-radius:14px;padding:12px 14px;display:grid;grid-template-columns:42px 1fr;gap:12px;cursor:pointer;box-shadow:4px 4px 0 var(--edge);transition:transform .12s,box-shadow .12s;border-top-width:7px;border-top-color:var(--b)}
 .moment:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--edge)}
 .moment .av{width:42px;height:42px}
@@ -165,9 +186,18 @@ h1 span{display:block;font-style:italic;font-weight:400;color:var(--sun)}
 /* detail sheet */
 .scrim{position:fixed;inset:0;background:rgba(23,20,46,.55);opacity:0;pointer-events:none;transition:opacity .2s;z-index:10}
 .scrim.open{opacity:1;pointer-events:auto}
-.sheet{position:fixed;left:0;right:0;bottom:0;max-height:86%;overflow-y:auto;background:var(--panel);border:3px solid var(--edge);border-bottom:0;border-radius:26px 26px 0 0;padding:24px 20px calc(26px + env(safe-area-inset-bottom,0px));transform:translateY(calc(100% + 64px));transition:transform .28s cubic-bezier(.3,1.3,.6,1);z-index:11;max-width:820px;margin:0 auto}
+.sheet{position:fixed;left:0;right:0;bottom:0;max-height:86%;display:flex;flex-direction:column;overflow:hidden;background:var(--panel);border:3px solid var(--edge);border-bottom:0;border-radius:26px 26px 0 0;transform:translateY(calc(100% + 64px));transition:transform .28s cubic-bezier(.3,1.3,.6,1);z-index:11;max-width:820px;margin:0 auto}
 .sheet.open{transform:none}
-.close{position:absolute;top:14px;right:14px;width:38px;height:38px;border-radius:50%;border:2px solid var(--edge);background:var(--panel);color:var(--on);font-size:1.2rem;font-weight:700;cursor:pointer;box-shadow:2px 2px 0 var(--edge)}
+.sheet.drag{transition:none}
+/* the grab bar: drag it (or the top of the content) down to close */
+.grab{flex:none;height:26px;display:grid;place-items:center;cursor:grab;touch-action:none}
+.grab::before{content:"";width:46px;height:6px;border-radius:999px;background:color-mix(in srgb,var(--ink) 30%,transparent)}
+.sbody{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding:4px 20px calc(26px + env(safe-area-inset-bottom,0px))}
+.close{position:absolute;top:14px;right:14px;z-index:2;width:40px;height:40px;border-radius:50%;border:2px solid var(--edge);background:var(--panel);color:var(--ink);display:grid;place-items:center;padding:0;cursor:pointer;box-shadow:2px 2px 0 var(--edge);transition:transform .12s,box-shadow .12s}
+.close svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round}
+.close:active{transform:translate(2px,2px);box-shadow:0 0 0 var(--edge)}
+.viewer .close{background:#F4F1E8;color:#1B2238}
+html.lock,html.lock body{overflow:hidden}
 .sheet-top{display:flex;gap:16px;align-items:center;margin:0 44px 16px 0;padding-bottom:16px;border-bottom:2.5px dashed color-mix(in srgb,var(--edge) 30%,transparent)}
 .sheet-top .av{width:72px;height:72px}
 .sheet h2{font-family:var(--display);font-weight:600;font-size:2rem;line-height:1;margin:0}
@@ -176,6 +206,7 @@ h1 span{display:block;font-style:italic;font-weight:400;color:var(--sun)}
 .tl::before{content:"";position:absolute;left:8px;top:8px;bottom:8px;width:3px;border-radius:2px;background:var(--rail)}
 .tl li{position:relative;margin:0 0 20px}
 .tl li::before{content:"";position:absolute;left:-27px;top:5px;width:16px;height:16px;border-radius:50%;background:var(--b);border:2.5px solid var(--edge)}
+.tl li.n::before{left:-29px;top:3px;width:20px;height:20px;box-shadow:2px 2px 0 var(--edge)}
 .tl li.m::before{background:var(--panel);border:3px solid var(--b);box-shadow:0 0 0 1.5px var(--edge)}
 .tl li.f::before{background:var(--panel);border:3px dotted var(--b)}
 .tl h3{font-family:var(--display);font-weight:600;font-size:1.2rem;margin:0;line-height:1.2}
@@ -242,7 +273,7 @@ section.panel>p,.about p{margin:0 0 14px;font-size:.95rem;max-width:62ch;font-fa
 .about p{margin-left:auto;margin-right:auto;color:var(--muted);text-align:center}
 footer{color:var(--muted);font-size:.8rem;margin-top:18px;max-width:62ch}
 @media (max-width:480px){.head,.row,.sub{grid-template-columns:minmax(130px,40%) 1fr}.who{gap:7px;padding-left:8px}.who .av{width:32px;height:32px}.who span{font-size:.9rem}.spine .t{font-size:.74rem}.tabs button{font-size:1rem}.shelf{gap:3px}.panel{padding:16px 14px}}
-@media (prefers-reduced-motion: reduce){.sheet,.scrim,.track,.track::after,.row,.btn,.chip,.moment,.spine,.tabs button{transition:none}.spine:hover,.spine[aria-pressed="true"]:hover{transform:translateY(-10px)}}
+@media (prefers-reduced-motion: reduce){.snack,.sheet,.scrim,.track,.track::after,.row,.btn,.chip,.moment,.spine,.tabs button{transition:none}.spine:hover,.spine[aria-pressed="true"]:hover{transform:translateY(-10px)}}
 </style>
 </head>
 <body>
@@ -282,7 +313,13 @@ footer{color:var(--muted);font-size:.8rem;margin-top:18px;max-width:62ch}
     <button type="button" data-f="people" aria-pressed="false">People</button>
     <button type="button" data-f="things" aria-pressed="false">Things</button>
   </div>
+  <div class="search" role="search">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 20 20"/></svg>
+    <input type="search" id="q" placeholder="Search people, places, ideas" aria-label="Search people, places and ideas" autocomplete="off" spellcheck="false" enterkeyhint="search">
+    <button class="clr" type="button" id="qClr" aria-label="Clear search" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+  </div>
   <div class="legend">
+    <span><i class="lg n"></i>Main role</span>
     <span><i class="lg"></i>Appears</span>
     <span><i class="lg r"></i>Mentioned or remembered</span>
     <span><i class="lg f"></i>A relative, a work, or an echo</span>
@@ -310,7 +347,7 @@ footer{color:var(--muted);font-size:.8rem;margin-top:18px;max-width:62ch}
       <button class="btn solid" type="submit">Send</button>
       <p class="err" id="fbErr" hidden>Could not send your message. Check your connection and try again.</p>
     </form>
-    <p class="thanks" id="fbThanks" hidden>Thank you. I read every message.</p>
+    <div id="fbThanks" hidden><p class="thanks">Thank you. I read every message.</p><button class="btn" type="button" id="fbAgain" style="margin-top:12px">Send another</button></div>
   </section>
 
   <section class="about">
@@ -326,8 +363,9 @@ footer{color:var(--muted);font-size:.8rem;margin-top:18px;max-width:62ch}
   <p>Mitchell rarely says what anyone looks like, so hair, faces and coats are mostly invention. If one looks wrong, tell us with the form at the bottom of the page.</p>
   <div class="acts"><button class="btn" type="button" id="aiCancel">Cancel</button><button class="btn solid" type="button" id="aiOk">Show portraits</button></div>
 </div></div>
-<div class="viewer" id="viewer" role="dialog" aria-modal="true" aria-label="Portrait" hidden><button class="close" type="button" aria-label="Close">&times;</button><div class="frame"><i class="ph"></i><img alt=""><span class="spin" role="status" aria-label="Loading"></span></div><p></p></div>
-<section class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetName"></section>
+<div class="viewer" id="viewer" role="dialog" aria-modal="true" aria-label="Portrait" hidden><button class="close" type="button" aria-label="Close"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button><div class="frame"><i class="ph"></i><img alt=""><span class="spin" role="status" aria-label="Loading"></span></div><p></p></div>
+<section class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetName"><div class="grab" aria-hidden="true"></div><button class="close" type="button" aria-label="Close"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button><div class="sbody" id="sbody"></div></section>
+<div class="snack" id="snack" role="status" aria-live="polite"><i aria-hidden="true"></i><span></span></div>
 
 <script>
 // AI portraits: put a square image (about 256x256 px, WebP) in the portraits folder,
@@ -515,6 +553,17 @@ const visE=e=>{const s=st[e.b];if(!s)return false;if(s===99)return true;return e
 const visLink=l=>{const s=st[l[2]];if(!s)return false;if(s===99)return true;return l[4]?l[4]<=s:false};
 const ok=id=>byId[id].e.some(visE);
 const inF=c=>flt==="all"||(flt==="people"?c.kind==="person":c.kind==="thing");
+// Search: only looks at text the reader can already see (names, roles, open entries), never at covered endings.
+let q="";
+const norm=s=>s.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
+const qHit=s=>norm(s).includes(norm(q.trim()));
+const hitC=c=>!q.trim()||qHit(c.name)||qHit(c.role);
+const hitE=(c,e)=>!q.trim()||hitC(c)||qHit(e.t);
+const inQ=c=>hitC(c)||c.e.some(e=>visE(e)&&hitE(c,e));
+// Strongest mark wins when one book has several entries: main role, appears, mentioned, then relative or echo.
+const RANK={n:0,a:1,m:2,f:3};
+const topK=es=>es.reduce((k,e)=>RANK[e.k]<RANK[k]?e.k:k,"f");
+const esc=s=>s.replace(/[&<>"]/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"})[ch]);
 
 let uid=0;
 const ICONS={
@@ -562,10 +611,10 @@ function renderBooks(){
 }
 function renderBoard(){
   const ord=(a,b)=>BOOKS.findIndex(x=>x.id===a.home)-BOOKS.findIndex(x=>x.id===b.home);
-  const vp=C.filter(c=>c.kind==="person"&&inF(c)&&ok(c.id)).sort(ord),vt=C.filter(c=>c.kind==="thing"&&inF(c)&&ok(c.id)).sort(ord);
+  const vp=C.filter(c=>c.kind==="person"&&inF(c)&&ok(c.id)&&inQ(c)).sort(ord),vt=C.filter(c=>c.kind==="thing"&&inF(c)&&ok(c.id)&&inQ(c)).sort(ord);
   const vis=[...vp,...vt];
   let h=`<div class="board" style="--n:${NB}"><div class="head"><div style="padding:8px 10px;font-family:var(--sans);font-size:.75rem;color:var(--muted)">Book</div><div class="cols">${BOOKS.map(b=>`<div style="--b:var(--${b.id})"><b>${b.ab}</b><small>${b.y}</small></div>`).join("")}</div></div>`;
-  if(!vis.length)h+=`<div class="empty">Mark a book as read to see its people.</div>`;
+  if(!vis.length)h+=`<div class="empty">${q.trim()&&NREAD()?`Nothing you have read matches \u201c${esc(q.trim())}\u201d.`:"Mark a book as read to see its people."}</div>`;
   h+=vis.map((c,ci)=>{
     const sub=(ci===0&&vp.length&&flt==="all")?`<div class="sub">People</div>`:(ci===vp.length&&vt.length&&flt==="all")?`<div class="sub">Places, things and ideas</div>`:"";
     let idx=[],cells="";
@@ -573,7 +622,7 @@ function renderBoard(){
       if(!st[b.id]){cells+=`<div class="cell locked"></div>`;return}
       const es=c.e.filter(e=>e.b===b.id&&visE(e));
       let mk="";
-      if(es.length){idx.push(i);const k=es.some(e=>e.k==="n")?"n":es.some(e=>e.k==="a")?"a":es[0].k;mk=k==="m"?`<i class="ring"></i>`:k==="f"?`<i class="fam"></i>`:`<i class="dot${k==="n"?" n":""}"></i>`}
+      if(es.length){idx.push(i);const k=topK(es);mk=k==="m"?`<i class="ring"></i>`:k==="f"?`<i class="fam"></i>`:`<i class="dot${k==="n"?" n":""}"></i>`}
       cells+=`<div class="cell" style="--b:var(--${b.id})">${mk}</div>`;
     });
     const lo=Math.min(...idx),hi=Math.max(...idx);
@@ -583,33 +632,40 @@ function renderBoard(){
   return h+"</div>";
 }
 function renderYears(){
-  const m=[];C.filter(inF).forEach(c=>c.e.forEach(e=>{if(visE(e))m.push({c,e})}));
+  const m=[];C.filter(inF).forEach(c=>c.e.forEach(e=>{if(visE(e)&&hitE(c,e))m.push({c,e})}));
   m.sort((a,b)=>a.e.y-b.e.y);
-  if(!m.length)return `<div class="board empty">Mark a book as read to see its moments.</div>`;
+  if(!m.length)return `<div class="board empty">${q.trim()&&NREAD()?`Nothing you have read matches \u201c${esc(q.trim())}\u201d.`:"Mark a book as read to see its moments."}</div>`;
   return `<ul class="years">${m.map(({c,e})=>{const b=bookById[e.b];
-    return `<li style="--b:var(--${b.id})"><span class="yr">${e.yl}</span><button class="moment" type="button" data-id="${c.id}">${avatar(c)}<span><h3>${c.name}<small>${b.t}${e.p?", part "+e.p:""}</small></h3><p>${e.t}</p></span></button></li>`}).join("")}</ul>`;
+    return `<li class="${e.k}" style="--b:var(--${b.id})"><span class="yr">${e.yl}</span><button class="moment" type="button" data-id="${c.id}">${avatar(c)}<span><h3>${c.name}<small>${b.t}${e.p?", part "+e.p:""} (${KIND(c,e)})</small></h3><p>${e.t}</p></span></button></li>`}).join("")}</ul>`;
 }
+const KIND=(c,e)=>(c.kind==="thing"?{a:"appears",n:"central",m:"mentioned",f:"echo"}:{a:"appears",n:"main character",m:"mentioned",f:"relative or work"})[e.k];
+const NREAD=()=>BOOKS.filter(b=>st[b.id]).length;
 function render(){
   renderBooks();
   document.getElementById("view").innerHTML=view==="book"?renderBoard():renderYears();
   document.getElementById("tBook").setAttribute("aria-selected",view==="book");
   document.getElementById("tYear").setAttribute("aria-selected",view==="year");
   document.querySelectorAll("[data-f]").forEach(b=>b.setAttribute("aria-pressed",b.dataset.f===flt));
-  const np=C.filter(c=>c.kind==="person"&&inF(c)&&ok(c.id)).length,nt=C.filter(c=>c.kind==="thing"&&inF(c)&&ok(c.id)).length,nb=BOOKS.filter(b=>st[b.id]).length;
-  document.getElementById("count").textContent=nb?`Showing ${np} ${np===1?"person":"people"} and ${nt} ${nt===1?"thing":"things"} from ${nb} ${nb===1?"book":"books"}.`:"";
+  const np=C.filter(c=>c.kind==="person"&&inF(c)&&ok(c.id)&&inQ(c)).length,nt=C.filter(c=>c.kind==="thing"&&inF(c)&&ok(c.id)&&inQ(c)).length,nb=NREAD();
+  document.getElementById("count").textContent=!nb?"":q.trim()?`Found ${np} ${np===1?"person":"people"} and ${nt} ${nt===1?"thing":"things"} for \u201c${q.trim()}\u201d.`:`Showing ${np} ${np===1?"person":"people"} and ${nt} ${nt===1?"thing":"things"} from ${nb} ${nb===1?"book":"books"}.`;
   document.getElementById("aiToggle").checked=aiOn;
 }
 
-const sheet=document.getElementById("sheet"),scrim=document.getElementById("scrim");let lastF=null;
+const sheet=document.getElementById("sheet"),sbody=document.getElementById("sbody"),scrim=document.getElementById("scrim");let lastF=null;
 function openSheet(id){
-  const c=byId[id];lastF=document.activeElement;
+  const c=byId[id];if(!sheet.classList.contains("open"))lastF=document.activeElement;
   const es=c.e.filter(visE).sort((a,b)=>a.y-b.y);
-  const tl=es.map(e=>{const b=bookById[e.b];const kind=(c.kind==="thing"?{a:"appears",n:"central",m:"mentioned",f:"echo"}:{a:"appears",n:"main character",m:"mentioned",f:"relative or work"})[e.k];
-    return `<li class="${e.k==="m"?"m":e.k==="f"?"f":""}" style="--b:var(--${b.id})"><h3>${e.yl}<small>${b.t}${e.p?", part "+e.p:""} (${kind})</small></h3><p>${e.t}</p>${e.x?`<button class="reveal" type="button">Show how it ends for them</button><p class="endtxt" hidden>${e.x}</p>`:""}</li>`}).join("");
-  const links=LINKS.filter(l=>(l[0]===id||l[1]===id)&&visLink(l)).map(l=>{const o=byId[l[0]===id?l[1]:l[0]];if(!ok(o.id))return"";
-    return `<button class="chip" type="button" data-id="${o.id}">${avatar(o)}<span>${o.name} <small>${l[3]}, ${bookById[l[2]].ab}</small></span></button>`}).join("");
-  sheet.innerHTML=`<button class="close" type="button" aria-label="Close">\u00d7</button><div class="sheet-top">${aiOn&&PORTRAITS[c.id]?`<button class="pbig" type="button" aria-label="Show bigger portrait of ${c.name}">${avatar(c)}<span class="zoom">Tap to enlarge</span></button>`:avatar(c)}<div><h2 id="sheetName">${c.name}</h2><p class="role">${c.role}</p>${aiOn&&PORTRAITS[c.id]?`<p class="ai-cap">AI-generated. Probably not who you pictured.</p>`:""}</div></div><ul class="tl">${tl}</ul>${links?`<div class="links"><h4>Connected to</h4><div class="chips">${links}</div></div>`:""}`;
-  sheet.dataset.id=id;sheet.scrollTop=0;sheet.classList.add("open");scrim.classList.add("open");sheet.querySelector(".close").focus();
+  const tl=es.map(e=>{const b=bookById[e.b];const kind=KIND(c,e);
+    return `<li class="${e.k}" style="--b:var(--${b.id})"><h3>${e.yl}<small>${b.t}${e.p?", part "+e.p:""} (${kind})</small></h3><p>${e.t}</p>${e.x?`<button class="reveal" type="button">Show how it ends for them</button><p class="endtxt" hidden>${e.x}</p>`:""}</li>`}).join("");
+  // One chip per connection: links to the same one in several books share a chip (e.g. Luisa and Spyglass in CA and UA).
+  const grp=new Map();
+  LINKS.filter(l=>(l[0]===id||l[1]===id)&&visLink(l)).forEach(l=>{const oid=l[0]===id?l[1]:l[0];if(!ok(oid))return;if(!grp.has(oid))grp.set(oid,[]);grp.get(oid).push(l)});
+  const links=[...grp].map(([oid,ls])=>{const o=byId[oid];
+    ls.sort((a,b)=>BOOKS.findIndex(x=>x.id===a[2])-BOOKS.findIndex(x=>x.id===b[2]));
+    const lab=[...new Set(ls.map(l=>l[3]))].join("; "),bks=[...new Set(ls.map(l=>bookById[l[2]].ab))].join(", ");
+    return `<button class="chip" type="button" data-id="${o.id}">${avatar(o)}<span>${o.name} <small>${lab}, ${bks}</small></span></button>`}).join("");
+  sbody.innerHTML=`<div class="sheet-top">${aiOn&&PORTRAITS[c.id]?`<button class="pbig" type="button" aria-label="Show bigger portrait of ${c.name}">${avatar(c)}<span class="zoom">Tap to enlarge</span></button>`:avatar(c)}<div><h2 id="sheetName">${c.name}</h2><p class="role">${c.role}</p>${aiOn&&PORTRAITS[c.id]?`<p class="ai-cap">AI-generated. Probably not who you pictured.</p>`:""}</div></div><ul class="tl">${tl}</ul>${links?`<div class="links"><h4>Connected to</h4><div class="chips">${links}</div></div>`:""}`;
+  sheet.dataset.id=id;sbody.scrollTop=0;sheet.style.transform="";sheet.classList.add("open");scrim.classList.add("open");document.documentElement.classList.add("lock");sheet.querySelector(".close").focus();
 }
 const viewer=document.getElementById("viewer");
 let vTok=0;
@@ -626,7 +682,27 @@ function openViewer(id){
 }
 function closeViewer(){viewer.hidden=true;const pb=sheet.querySelector(".pbig");if(pb)pb.focus()}
 viewer.addEventListener("click",closeViewer);
-function closeSheet(){sheet.classList.remove("open");scrim.classList.remove("open");if(lastF)lastF.focus()}
+function closeSheet(){sheet.classList.remove("open","drag");sheet.style.transform="";scrim.style.opacity="";scrim.classList.remove("open");document.documentElement.classList.remove("lock");if(lastF)lastF.focus()}
+// Swipe down to close: from the grab bar, or anywhere once the content is scrolled to the top.
+// Otherwise the touch scrolls the sheet's content, and never the page behind it.
+let sw=null;
+sheet.addEventListener("touchstart",e=>{if(e.touches.length!==1)return;const t=e.touches[0];sw={y:t.clientY,t:Date.now(),grab:!!e.target.closest(".grab"),top:sbody.scrollTop<=0,dy:0,on:false}},{passive:true});
+sheet.addEventListener("touchmove",e=>{
+  if(!sw)return;const dy=e.touches[0].clientY-sw.y;
+  if(!sw.on){if(dy>6&&(sw.grab||(sw.top&&sbody.scrollTop<=0))){sw.on=true;sw.y+=6;sheet.classList.add("drag")}else if(Math.abs(dy)>6&&!sw.grab){sw=null;return}else return}
+  e.preventDefault();sw.dy=Math.max(0,e.touches[0].clientY-sw.y);
+  sheet.style.transform=`translateY(${sw.dy}px)`;scrim.style.opacity=String(Math.max(.2,1-sw.dy/(sheet.offsetHeight||1)));
+},{passive:false});
+const swEnd=()=>{if(!sw)return;const s=sw;sw=null;if(!s.on)return;sheet.classList.remove("drag");scrim.style.opacity="";
+  const fast=s.dy/Math.max(1,Date.now()-s.t)>.5;
+  if(s.dy>Math.min(140,sheet.offsetHeight*.25)||(fast&&s.dy>40))closeSheet();else sheet.style.transform=""};
+sheet.addEventListener("touchend",swEnd);sheet.addEventListener("touchcancel",swEnd);
+// Mouse users can drag the grab bar too.
+sheet.querySelector(".grab").addEventListener("pointerdown",e=>{if(e.pointerType==="touch")return;const y0=e.clientY;let dy=0;sheet.classList.add("drag");
+  const mv=ev=>{dy=Math.max(0,ev.clientY-y0);sheet.style.transform=`translateY(${dy}px)`};
+  const up=()=>{removeEventListener("pointermove",mv);removeEventListener("pointerup",up);sheet.classList.remove("drag");if(dy>100||dy<4)closeSheet();else sheet.style.transform=""};
+  addEventListener("pointermove",mv);addEventListener("pointerup",up)});
+scrim.addEventListener("touchmove",e=>e.preventDefault(),{passive:false});
 
 document.getElementById("books").addEventListener("click",e=>{const s=e.target.closest(".spine");if(!s)return;const id=s.dataset.b;st[id]=st[id]?0:99;save();render();const n=document.querySelector(`.spine[data-b="${id}"]`);if(n)n.focus()});
 document.getElementById("all").onclick=()=>{BOOKS.forEach(b=>st[b.id]=99);save();render()};
@@ -634,6 +710,9 @@ document.getElementById("none").onclick=()=>{BOOKS.forEach(b=>st[b.id]=0);save()
 document.getElementById("tBook").onclick=()=>{view="book";save();render()};
 document.querySelectorAll("[data-f]").forEach(b=>b.onclick=()=>{flt=b.dataset.f;save();render()});
 document.getElementById("tYear").onclick=()=>{view="year";save();render()};
+const qIn=document.getElementById("q"),qClr=document.getElementById("qClr");
+qIn.addEventListener("input",()=>{q=qIn.value;qClr.hidden=!q;render()});
+qClr.onclick=()=>{qIn.value=q="";qClr.hidden=true;render();qIn.focus()};
 document.getElementById("view").addEventListener("click",e=>{const r=e.target.closest("[data-id]");if(r)openSheet(r.dataset.id)});
 sheet.addEventListener("click",e=>{if(e.target.closest(".close"))return closeSheet();const pb=e.target.closest(".pbig");if(pb)return openViewer(sheet.dataset.id);const rv=e.target.closest(".reveal");if(rv){rv.nextElementSibling.hidden=false;rv.remove();return}const ch=e.target.closest(".chip");if(ch)openSheet(ch.dataset.id)});
 scrim.addEventListener("click",closeSheet);
@@ -658,12 +737,22 @@ async function send(form){
   const r=await fetch("/",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:new URLSearchParams(new FormData(form)).toString()});
   if(!r.ok)throw new Error("HTTP "+r.status);
 }
-const fbForm=document.getElementById("fbForm");
+const snack=document.getElementById("snack");let snackT=0;
+const TICK='<svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>',CROSS='<svg viewBox="0 0 24 24"><path d="M7 7l10 10M17 7 7 17"/></svg>';
+function toast(msg,bad){
+  snack.classList.toggle("bad",!!bad);snack.querySelector("i").innerHTML=bad?CROSS:TICK;snack.querySelector("span").textContent=msg;
+  snack.classList.remove("show");void snack.offsetWidth;snack.classList.add("show");
+  clearTimeout(snackT);snackT=setTimeout(()=>snack.classList.remove("show"),bad?6000:4500);
+}
+const fbForm=document.getElementById("fbForm"),fbBtn=fbForm.querySelector("[type=submit]");
 fbForm.addEventListener("submit",async e=>{
   e.preventDefault();document.getElementById("fbErr").hidden=true;
-  try{await send(fbForm);fbForm.hidden=true;document.getElementById("fbThanks").hidden=false}
-  catch(err){document.getElementById("fbErr").hidden=false}
+  fbBtn.disabled=true;fbBtn.textContent="Sending\u2026";
+  try{await send(fbForm);fbForm.reset();fbForm.hidden=true;document.getElementById("fbThanks").hidden=false;toast("Sent. Thank you, the map gets better with every note.")}
+  catch(err){document.getElementById("fbErr").hidden=false;toast("Not sent. Check your connection and try again.",true)}
+  finally{fbBtn.disabled=false;fbBtn.textContent="Send"}
 });
+document.getElementById("fbAgain").onclick=()=>{document.getElementById("fbThanks").hidden=true;fbForm.hidden=false;fbForm.querySelector("textarea").focus()};
 // Theme toggle. No saved choice means the device setting is used (the CSS media query handles it).
 const themeBtn=document.getElementById("themeBtn"),darkMq=window.matchMedia("(prefers-color-scheme: dark)");
 const curTheme=()=>document.documentElement.dataset.theme||(darkMq.matches?"dark":"light");
