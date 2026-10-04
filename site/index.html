@@ -181,7 +181,13 @@ h1 span{display:block;font-style:italic;font-weight:400;color:var(--sun)}
 .pbig .zoom{position:absolute;left:50%;bottom:-8px;transform:translateX(-50%);font:700 10px/1.7 var(--sans);background:var(--sky);color:var(--on);border:2px solid var(--edge);border-radius:999px;padding:0 8px;white-space:nowrap}
 .viewer{position:fixed;inset:0;z-index:20;background:rgba(23,20,46,.92);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:16px;cursor:zoom-out}
 .viewer[hidden]{display:none}
-.viewer img{max-width:min(88vw,700px);max-height:76vh;width:auto;height:auto;border-radius:20px;border:4px solid #F4F1E8;box-shadow:10px 10px 0 #7D89D6}
+.viewer .frame{position:relative;width:min(88vw,700px,76vh);aspect-ratio:1;border-radius:20px;border:4px solid #F4F1E8;box-shadow:10px 10px 0 #7D89D6;overflow:hidden;background:#2A2550}
+.viewer .ph{position:absolute;inset:-12px;background:center/cover no-repeat;filter:blur(10px);opacity:.75}
+.viewer .frame img{position:relative;display:block;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .25s}
+.viewer .frame.ready img{opacity:1}
+.viewer .spin{position:absolute;left:50%;top:50%;width:42px;height:42px;margin:-21px 0 0 -21px;border-radius:50%;border:3px solid rgba(255,246,229,.3);border-top-color:#FFF6E5;animation:vspin .8s linear infinite}
+.viewer .frame.ready .spin{display:none}
+@keyframes vspin{to{transform:rotate(360deg)}}
 .viewer p{color:#FFF6E5;font-family:var(--display);font-style:italic;font-size:1.05rem;margin:0;text-align:center}
 .viewer .close{position:fixed}
 .ai-cap{font-size:.8rem;color:var(--muted);margin:6px 0 0;font-style:italic}
@@ -294,7 +300,7 @@ footer{color:var(--muted);font-size:.8rem;margin-top:18px;max-width:62ch}
   <p>Mitchell rarely says what anyone looks like, so hair, faces and coats are mostly invention. If one looks wrong, tell us with the form at the bottom of the page.</p>
   <div class="acts"><button class="btn" type="button" id="aiCancel">Cancel</button><button class="btn solid" type="button" id="aiOk">Show portraits</button></div>
 </div></div>
-<div class="viewer" id="viewer" role="dialog" aria-modal="true" aria-label="Portrait" hidden><button class="close" type="button" aria-label="Close">&times;</button><img alt=""><p></p></div>
+<div class="viewer" id="viewer" role="dialog" aria-modal="true" aria-label="Portrait" hidden><button class="close" type="button" aria-label="Close">&times;</button><div class="frame"><i class="ph"></i><img alt=""><span class="spin" role="status" aria-label="Loading"></span></div><p></p></div>
 <section class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetName"></section>
 
 <script>
@@ -580,9 +586,14 @@ function openSheet(id){
   sheet.dataset.id=id;sheet.scrollTop=0;sheet.classList.add("open");scrim.classList.add("open");sheet.querySelector(".close").focus();
 }
 const viewer=document.getElementById("viewer");
+let vTok=0;
 function openViewer(id){
-  const c=byId[id],src=PORTRAITS[id],img=viewer.querySelector("img");
-  img.onerror=()=>{img.onerror=null;img.src=src};
+  const c=byId[id],src=PORTRAITS[id],fr=viewer.querySelector(".frame"),img=fr.querySelector("img"),tok=++vTok;
+  // Clear the last portrait first, show the small one blurred and a spinner, then fade in the big one.
+  fr.classList.remove("ready");img.removeAttribute("src");
+  fr.querySelector(".ph").style.backgroundImage=`url("${src}")`;
+  img.onload=()=>{if(tok===vTok)fr.classList.add("ready")};
+  img.onerror=()=>{img.onerror=null;if(tok===vTok)img.src=src};
   img.src=src.replace(/\.webp$/,"-lg.webp");img.alt="AI-generated portrait of "+c.name;
   viewer.querySelector("p").textContent=c.name+". AI-generated. Probably not who you pictured.";
   viewer.hidden=false;viewer.querySelector(".close").focus();
