@@ -168,7 +168,7 @@ footer{color:var(--muted);font-size:.8rem;margin-top:18px;max-width:62ch}
 <body>
 <div class="wrap">
   <h1>Mitchellverse: what comes back</h1>
-  <p class="lede">David Mitchell's novels share one world. People, places, ideas and even a magazine return in later books, sometimes 200 years later. Mark the books you have read, and only those appear.</p>
+  <p class="lede">David Mitchell writes one book in many volumes. People, places, ideas and one stubborn magazine slip between novels, sometimes two centuries late. Mark what you have read; the rest stays dark.</p>
 
   <div class="panel">
     <p>Which books have you read?</p>
@@ -201,11 +201,11 @@ footer{color:var(--muted);font-size:.8rem;margin-top:18px;max-width:62ch}
   <p class="count" id="count" aria-live="polite"></p>
   <div id="view"></div>
 
-  <p class="count" style="margin-top:10px">Tap any person, thing or moment for details. Notes about how a story ends stay covered until you tap them.</p>
+  <p class="count" style="margin-top:10px">Tap anyone or anything to look closer. Endings stay under a sheet until you lift it.</p>
 
   <section class="panel" id="feedback" style="margin-top:24px">
-    <h2>Found a mistake or a missing link?</h2>
-    <p>Readers know these books better than any map. Tell me what is wrong or missing, for example a cameo such as Dwight Silverwind, Nurse Noakes or Felix Finch.</p>
+    <h2>Found a crack in the map?</h2>
+    <p>Readers know these books better than any map does. Tell me what is wrong or missing: a stray cameo, say, from Dwight Silverwind, Nurse Noakes or Felix Finch.</p>
     <form name="correction" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="fbForm">
       <input type="hidden" name="form-name" value="correction">
       <p hidden><label>Leave this empty <input name="bot-field"></label></p>
@@ -226,15 +226,15 @@ footer{color:var(--muted);font-size:.8rem;margin-top:18px;max-width:62ch}
 
   <section class="about">
     <h2>About this map</h2>
-    <p>A free fan project by a reader of David Mitchell's books. It is not connected to the author or his publishers. All text is in my own words, and all drawings and icons are original. The map can contain mistakes, so please tell me when you find one.</p>
+    <p>A free fan project by one reader of David Mitchell's books, with no link to the author or his publishers. Every word is my own, and so is every drawing and icon. Maps lie sometimes, so tell me when this one does.</p>
   </section>
 </div>
 <div class="scrim" id="scrim"></div>
 <div class="modal" id="aiModal" role="dialog" aria-modal="true" aria-labelledby="aiModalT" hidden><div class="box">
   <h2 id="aiModalT">Turn on AI portraits?</h2>
-  <p>The portraits of the people are made with an AI image tool. They are not official and they are not from the books.</p>
-  <p>They show one fan's idea of each person. They are probably not how you imagined them when you read the books.</p>
-  <p>The books give few details about how people look, so hair, faces and clothes are often guesses. If a portrait looks wrong to you, tell us with the form at the bottom of the page.</p>
+  <p>These portraits come from an AI image tool. They are not official, and they are not from the books.</p>
+  <p>Each one is a single fan's guess at a face, and probably not the face you met in your head.</p>
+  <p>Mitchell rarely says what anyone looks like, so hair, faces and coats are mostly invention. If one looks wrong, tell us with the form at the bottom of the page.</p>
   <div class="acts"><button class="btn" type="button" id="aiCancel">Cancel</button><button class="btn solid" type="button" id="aiOk">Show portraits</button></div>
 </div></div>
 <div class="viewer" id="viewer" role="dialog" aria-modal="true" aria-label="Portrait" hidden><button class="close" type="button" aria-label="Close">&times;</button><img alt=""><p></p></div>
@@ -286,129 +286,129 @@ const BOOKS=[
 const FAIR="#F1D3BC",LIGHT="#E8BE9C",TAN="#C98E62",BROWN="#8E5A3A";
 // k: a appears, n narrator/main, m mentioned, f relative or work
 const C=[
- {id:"marinus",name:"Marinus",home:"ta",role:"A soul that wakes in a new body after each death. A doctor in almost every life.",
+ {id:"marinus",name:"Marinus",home:"ta",role:"Dies, wakes up in someone new, and becomes a doctor again. Has done so for centuries.",
   av:{skin:LIGHT,hair:"short",hc:"#4A4A50",glasses:1},
-  e:[{b:"ta",y:1799,yl:"1799",k:"a",t:"Dr Lucas Marinus, a Dutch surgeon and scholar on Dejima, the trading island at Nagasaki. Rude, brilliant, and a friend to Jacob.",x:"He hints that he has lived before. This is one of his many lives."},
-     {b:"ua",y:1968,yl:"1968",k:"a",t:"A doctor who, together with Esther Little, helps Jasper with the knocking voice in his head. They tell Jasper about his ancestor Jacob."},
-     {b:"btc",p:1,y:1976,yl:"1970s",k:"m",t:"Holly remembers Dr Marinus, who touched her forehead and stopped the voices she heard as a child."},
-     {b:"sh",y:2015,yl:"2015",k:"a",t:"Dr Iris Marinus-Fenby walks into Slade House on purpose.",x:"The Grayer twins' trap turns against them."},
-     {b:"btc",p:5,y:2025,yl:"2025",k:"n",t:"Narrator, in the body of Dr Iris Fenby. Explains the secret war between Horologists and Anchorites."},
-     {b:"btc",p:6,y:2043,yl:"2043",k:"a",t:"Comes to Sheep's Head near the end of the book.",x:"Takes Lorelei and Rafiq away to safety."}]},
- {id:"jacob",name:"Jacob de Zoet",home:"ta",role:"Young Dutch clerk with red hair, honest in a corrupt place.",
+  e:[{b:"ta",y:1799,yl:"1799",k:"a",t:"Dr Lucas Marinus, Dutch surgeon and scholar on Dejima, Nagasaki's trading island. Rude, brilliant, Jacob's friend.",x:"He drops hints that he has done all this before. He has, many times."},
+     {b:"ua",y:1968,yl:"1968",k:"a",t:"A doctor who, with Esther Little, comes for the knocking in Jasper's head, and tells him about an ancestor called Jacob."},
+     {b:"btc",p:1,y:1976,yl:"1970s",k:"m",t:"Holly remembers Dr Marinus: one touch to her forehead, and the voices of her childhood went quiet."},
+     {b:"sh",y:2015,yl:"2015",k:"a",t:"Dr Iris Marinus-Fenby walks into Slade House. Deliberately.",x:"The trap snaps shut on the Grayer twins."},
+     {b:"btc",p:5,y:2025,yl:"2025",k:"n",t:"Narrator, now Dr Iris Fenby. Explains the secret war of Horologists and Anchorites."},
+     {b:"btc",p:6,y:2043,yl:"2043",k:"a",t:"Arrives at Sheep's Head as the book nears its end.",x:"Carries Lorelei and Rafiq away to safety."}]},
+ {id:"jacob",name:"Jacob de Zoet",home:"ta",role:"Red-haired Dutch clerk. Honest, in a place that isn't.",
   av:{skin:FAIR,hair:"short",hc:"#B5552C"},
-  e:[{b:"ta",y:1799,yl:"1799",k:"n",t:"Comes to Dejima to clean up the company's accounts. He falls for the midwife Orito Aibagawa."},
-     {b:"ua",y:1968,yl:"1968",k:"f",t:"His descendant Jasper plays guitar in Utopia Avenue. Jasper learns Jacob's story."}]},
- {id:"enomoto",name:"Abbot Enomoto",home:"ta",role:"Head of a closed mountain shrine. Polite, powerful and very dangerous.",
+  e:[{b:"ta",y:1799,yl:"1799",k:"n",t:"Sent to Dejima to clean up crooked books. Falls for the midwife Orito Aibagawa."},
+     {b:"ua",y:1968,yl:"1968",k:"f",t:"His descendant Jasper plays guitar in Utopia Avenue, and learns Jacob's story."}]},
+ {id:"enomoto",name:"Abbot Enomoto",home:"ta",role:"Abbot of a sealed mountain shrine. Courteous, powerful, lethal.",
   av:{skin:TAN,hair:"bald",hc:"#000",old:1},
-  e:[{b:"ta",y:1800,yl:"1800",k:"a",t:"Takes Orito to his shrine on Mount Shiranui.",x:"His order steals life from others to stay alive. It is an early form of what the Anchorites do in The Bone Clocks."},
-     {b:"ua",y:1968,yl:"1968",k:"a",t:"A voice that knocks inside Jasper's head. Jasper calls it Knock Knock.",x:"The voice is Enomoto's spirit. It has moved down the de Zoet family line since Jacob."}]},
- {id:"jasper",name:"Jasper de Zoet",home:"ua",role:"Guitarist of Utopia Avenue. Strange, gifted, haunted.",
+  e:[{b:"ta",y:1800,yl:"1800",k:"a",t:"Takes Orito to his shrine on Mount Shiranui.",x:"His order stays alive on stolen life: an early draft of what the Anchorites do in The Bone Clocks."},
+     {b:"ua",y:1968,yl:"1968",k:"a",t:"A knocking inside Jasper's skull. Jasper names it Knock Knock.",x:"It is Enomoto's spirit, passed down the de Zoet line since Jacob like an unwanted heirloom."}]},
+ {id:"jasper",name:"Jasper de Zoet",home:"ua",role:"Utopia Avenue's guitarist. Strange, gifted, haunted.",
   av:{skin:FAIR,hair:"swept",hc:"#C9A867"},
-  e:[{b:"ua",y:1967,yl:"1967",k:"n",t:"One of the four band members who tell the story. A knocking voice has followed him since school."}]},
- {id:"darnoq",name:"The D'Arnoqs",home:"ca",role:"A family name that crosses the Pacific and 150 years.",
+  e:[{b:"ua",y:1967,yl:"1967",k:"n",t:"One of the band's four narrators. Something has knocked in his head since school."}]},
+ {id:"darnoq",name:"The D'Arnoqs",home:"ca",role:"A surname that crosses the Pacific and 150 years.",
   av:{skin:LIGHT,hair:"short",hc:"#1F1A17"},
-  e:[{b:"ca",y:1850,yl:"1850",k:"a",t:"Mr D'Arnoq lives on the Chatham Islands. He tells Adam Ewing the story of the Moriori people."},
-     {b:"btc",p:2,y:1991,yl:"1991",k:"f",t:"Elijah D'Arnoq, a New Zealander at Cambridge, knows Hugo Lamb. Probably a descendant of the Chatham Islands D'Arnoq."},
-     {b:"btc",p:5,y:2025,yl:"2025",k:"f",t:"Elijah contacts Marinus and offers to change sides.",x:"It is a trap. His memories were faked to lead the Horologists into a fight."}]},
- {id:"frobisher",name:"Robert Frobisher",home:"ca",role:"Young English composer with no money and great talent.",
+  e:[{b:"ca",y:1850,yl:"1850",k:"a",t:"Mr D'Arnoq of the Chatham Islands tells Adam Ewing what became of the Moriori."},
+     {b:"btc",p:2,y:1991,yl:"1991",k:"f",t:"Elijah D'Arnoq, a New Zealander in Hugo Lamb's Cambridge set. Likely kin to the Chatham Islands D'Arnoq."},
+     {b:"btc",p:5,y:2025,yl:"2025",k:"f",t:"Elijah offers Marinus his defection.",x:"A trap. His memories were forged to walk the Horologists into a fight."}]},
+ {id:"frobisher",name:"Robert Frobisher",home:"ca",role:"Young English composer. Rich in talent, nothing else.",
   av:{skin:FAIR,hair:"swept",hc:"#6B4A2E"},
-  e:[{b:"ca",y:1931,yl:"1931",k:"n",t:"Writes letters to his friend Sixsmith from Belgium, where he works for the old composer Vyvyan Ayrs. He composes the Cloud Atlas Sextet."},
-     {b:"ua",y:1967,yl:"1967",k:"f",t:"Jasper listens to a record of the Cloud Atlas Sextet."}]},
- {id:"eva",name:"Eva Crommelynck",home:"ca",role:"Daughter of Vyvyan Ayrs. Clever, sharp-tongued.",
+  e:[{b:"ca",y:1931,yl:"1931",k:"n",t:"Writes to his friend Sixsmith from Belgium, where he works for the ageing composer Vyvyan Ayrs. Composes the Cloud Atlas Sextet."},
+     {b:"ua",y:1967,yl:"1967",k:"f",t:"Jasper puts on a record of the Cloud Atlas Sextet."}]},
+ {id:"eva",name:"Eva Crommelynck",home:"ca",role:"Vyvyan Ayrs's daughter. Clever, sharp-tongued.",
   av:{skin:FAIR,hair:"bob",hc:"#B08B57"},
-  e:[{b:"ca",y:1931,yl:"1931",k:"a",t:"A teenager at her father's house in Belgium. Frobisher falls for her."},
-     {b:"bsg",y:1982,yl:"1982",k:"a",t:"Madame Eva van Outryve de Crommelynck, now an old woman in England. She reads young Jason's poems and gives him honest advice."}]},
- {id:"luisa",name:"Luisa Rey",home:"gw",role:"Brave reporter. First a voice on the radio, then a heroine.",
+  e:[{b:"ca",y:1931,yl:"1931",k:"a",t:"A teenager in her father's Belgian house. Frobisher falls hard."},
+     {b:"bsg",y:1982,yl:"1982",k:"a",t:"Madame Eva van Outryve de Crommelynck, old now, in England. She reads young Jason's poems and tells him the truth."}]},
+ {id:"luisa",name:"Luisa Rey",home:"gw",role:"Fearless reporter. First a voice on late-night radio, then a heroine.",
   av:{skin:TAN,hair:"long",hc:"#1C1614"},
-  e:[{b:"gw",y:1998,yl:"1990s",k:"a",t:"She phones in to Bat Segundo's late-night radio show in New York."},
-     {b:"ua",y:1968,yl:"1968",k:"a",t:"A young reporter for Spyglass magazine. She meets the band and falls in love with Elf Holloway."},
-     {b:"ca",y:1975,yl:"1975",k:"n",t:"Reporter for Spyglass in Buenas Yerbas, California. She investigates a dangerous nuclear power plant."}]},
- {id:"bat",name:"Bat Segundo",home:"gw",role:"Late-night radio host.",
+  e:[{b:"gw",y:1998,yl:"1990s",k:"a",t:"Calls in to Bat Segundo's late-night show in New York."},
+     {b:"ua",y:1968,yl:"1968",k:"a",t:"A young Spyglass reporter who meets the band and falls for Elf Holloway."},
+     {b:"ca",y:1975,yl:"1975",k:"n",t:"Spyglass reporter in Buenas Yerbas, California, digging into a nuclear plant with powerful friends."}]},
+ {id:"bat",name:"Bat Segundo",home:"gw",role:"Radio host of the small hours.",
   av:{skin:LIGHT,hair:"curly",hc:"#241B16",glasses:1},
-  e:[{b:"gw",y:1998,yl:"1990s",k:"a",t:"Hosts the Night Train radio show in New York. A strange caller keeps phoning in."},
-     {b:"ua",y:1968,yl:"1968",k:"a",t:"A radio personality in the band's world."}]},
- {id:"cavendish",name:"Timothy Cavendish",home:"gw",role:"London publisher, vain and very funny.",
+  e:[{b:"gw",y:1998,yl:"1990s",k:"a",t:"Hosts Night Train on New York radio. One very strange caller keeps ringing back."},
+     {b:"ua",y:1968,yl:"1968",k:"a",t:"A radio voice in the band's orbit."}]},
+ {id:"cavendish",name:"Timothy Cavendish",home:"gw",role:"Vain London publisher. Very funny.",
   av:{skin:FAIR,hair:"balding",hc:"#DDD8CF",old:1},
-  e:[{b:"gw",y:1998,yl:"1990s",k:"a",t:"A small part in the London section."},
-     {b:"ca",y:2004,yl:"2000s",k:"n",t:"Narrator of his own ordeal. He is locked by mistake in an old people's home and plans an escape."}]},
+  e:[{b:"gw",y:1998,yl:"1990s",k:"a",t:"A walk-on part in the London section."},
+     {b:"ca",y:2004,yl:"2000s",k:"n",t:"Narrates his own ordeal: locked by mistake in an old people's home, he plots a great escape."}]},
  {id:"mo",name:"Mo Muntervary",home:"gw",role:"Irish quantum physicist.",
   av:{skin:FAIR,hair:"short",hc:"#CFCBC4",old:1,glasses:1},
-  e:[{b:"gw",y:1998,yl:"1990s",k:"n",t:"Runs from people who want to use her work for weapons, back to her home on Clear Island in Ireland."},
-     {b:"btc",p:6,y:2043,yl:"2043",k:"a",t:"Very old now. Holly's neighbour at Sheep's Head."}]},
- {id:"hugo",name:"Hugo Lamb",home:"bsg",role:"Charming, clever and cold.",
+  e:[{b:"gw",y:1998,yl:"1990s",k:"n",t:"On the run from people who want her work for weapons, heading home to Clear Island in Ireland."},
+     {b:"btc",p:6,y:2043,yl:"2043",k:"a",t:"Very old. Holly's neighbour at Sheep's Head."}]},
+ {id:"hugo",name:"Hugo Lamb",home:"bsg",role:"Charming, clever, cold.",
   av:{skin:FAIR,hair:"swept",hc:"#D8BE7E"},
-  e:[{b:"bsg",y:1982,yl:"1982",k:"a",t:"Jason Taylor's older cousin. Cool and smooth. Jason admires him and is a little afraid of him."},
-     {b:"btc",p:2,y:1991,yl:"1991",k:"n",t:"Narrator. A Cambridge student who cheats people. In Switzerland he falls for Holly Sykes.",x:"He accepts the Anchorites' offer and leaves Holly."},
-     {b:"btc",p:4,y:2018,yl:"2010s",k:"a",t:"Comes back in Crispin's story, and he has not aged.",x:"In Iceland he questions Crispin about Holly, then erases his memory."},
-     {b:"btc",p:5,y:2025,yl:"2025",k:"a",t:"An Anchorite now. He meets Holly again.",x:"He stays behind with Marinus and says he truly loved Holly."}]},
- {id:"ed",name:"Ed Brubeck",home:"btc",role:"Holly's schoolmate, later a war reporter and her partner.",
+  e:[{b:"bsg",y:1982,yl:"1982",k:"a",t:"Jason Taylor's older cousin, smooth as ice. Jason admires him, and fears him a little."},
+     {b:"btc",p:2,y:1991,yl:"1991",k:"n",t:"Narrator. Cambridge swindler. In Switzerland he falls for Holly Sykes.",x:"He takes the Anchorites' offer. Holly is left behind."},
+     {b:"btc",p:4,y:2018,yl:"2010s",k:"a",t:"Turns up in Crispin's story, not a day older.",x:"In Iceland he grills Crispin about Holly, then wipes his memory."},
+     {b:"btc",p:5,y:2025,yl:"2025",k:"a",t:"An Anchorite now. Meets Holly again.",x:"He stays behind with Marinus, and admits he truly loved Holly."}]},
+ {id:"ed",name:"Ed Brubeck",home:"btc",role:"Holly's schoolmate. Later a war reporter, and her partner.",
   av:{skin:LIGHT,hair:"short",hc:"#2E2621"},
-  e:[{b:"btc",p:1,y:1984,yl:"1984",k:"a",t:"Holly's classmate in Gravesend. He tells her about the strawberry farm."},
-     {b:"btc",p:3,y:2004,yl:"2004",k:"n",t:"Narrator. A war reporter for Spyglass magazine, the same magazine Luisa Rey worked for. Home from Iraq for Sharon Sykes's wedding."}]},
- {id:"esther",name:"Esther Little",home:"btc",role:"One of the oldest Horologists.",
+  e:[{b:"btc",p:1,y:1984,yl:"1984",k:"a",t:"A Gravesend classmate who tips Holly off about the strawberry farm."},
+     {b:"btc",p:3,y:2004,yl:"2004",k:"n",t:"Narrator. A war reporter for Spyglass, Luisa Rey's old magazine, home from Iraq for Sharon Sykes's wedding."}]},
+ {id:"esther",name:"Esther Little",home:"btc",role:"The oldest of the old Horologists.",
   av:{skin:TAN,hair:"bun",hc:"#E9E4DA",old:1},
-  e:[{b:"ua",y:1968,yl:"1968",k:"a",t:"With Marinus, she helps Jasper with the voice in his head."},
-     {b:"btc",p:1,y:1984,yl:"1984",k:"a",t:"An old woman by the Thames. She gives Holly tea and asks for \u201casylum\u201d.",x:"She uses the asylum Holly promised."},
-     {b:"btc",p:5,y:2025,yl:"2025",k:"a",t:"Sends messages to Marinus, though everyone thought she was dead.",x:"She was hiding in Holly's memory since 1984."}]},
- {id:"crispin",name:"Crispin Hershey",home:"btc",role:"Son of a film director, later a bitter novelist.",
+  e:[{b:"ua",y:1968,yl:"1968",k:"a",t:"With Marinus, tackles the voice in Jasper's head."},
+     {b:"btc",p:1,y:1984,yl:"1984",k:"a",t:"An old woman by the Thames. Gives Holly tea, asks for \u201casylum\u201d.",x:"She cashes in Holly's promise."},
+     {b:"btc",p:5,y:2025,yl:"2025",k:"a",t:"Sends word to Marinus, though everyone thought her dead.",x:"Hiding in Holly's memory since 1984."}]},
+ {id:"crispin",name:"Crispin Hershey",home:"btc",role:"A film director's son, later a bitter novelist.",
   av:{skin:LIGHT,hair:"short",hc:"#8D8A86",beard:1},
-  e:[{b:"ua",y:1968,yl:"1968",k:"a",t:"A small boy the band meets at a party in London."},
-     {b:"btc",p:4,y:2015,yl:"2015\u201320",k:"n",t:"Narrator. A novelist whose career is going down. He becomes Holly's friend."}]},
- {id:"levon",name:"Levon Frankland",home:"ua",role:"Band manager with good taste and big plans.",
+  e:[{b:"ua",y:1968,yl:"1968",k:"a",t:"A small boy at a London party with the band."},
+     {b:"btc",p:4,y:2015,yl:"2015\u201320",k:"n",t:"Narrator. A novelist in free fall. Becomes Holly's friend."}]},
+ {id:"levon",name:"Levon Frankland",home:"ua",role:"Band manager with good ears and bigger plans.",
   av:{skin:FAIR,hair:"balding",hc:"#6A5644",glasses:1},
-  e:[{b:"ua",y:1967,yl:"1967",k:"a",t:"Brings Dean, Elf, Jasper and Griff together as Utopia Avenue and manages them."},
-     {b:"btc",p:4,y:2016,yl:"2010s",k:"a",t:"Old now. He meets Crispin and remembers that a band he managed once planned music for a film by Crispin's father."}]}
+  e:[{b:"ua",y:1967,yl:"1967",k:"a",t:"Assembles Dean, Elf, Jasper and Griff into Utopia Avenue, then manages the result."},
+     {b:"btc",p:4,y:2016,yl:"2010s",k:"a",t:"Old now. Meeting Crispin, he recalls that a band of his once planned the music for a film by Crispin's father."}]}
 ];
 
 const T=[
- {id:"spyglass",name:"Spyglass magazine",home:"ca",icon:"mag",role:"An American magazine that hires brave reporters.",
-  e:[{b:"ua",y:1968,yl:"1968",k:"a",t:"Luisa Rey already works for Spyglass when she meets Utopia Avenue."},
-     {b:"ca",y:1975,yl:"1975",k:"a",t:"Luisa Rey writes for Spyglass while she investigates the nuclear power plant."},
-     {b:"btc",p:3,y:2004,yl:"2004",k:"a",t:"Ed Brubeck reports from Iraq for Spyglass."}]},
- {id:"sextet",name:"Cloud Atlas Sextet",home:"ca",icon:"music",role:"A piece of music by Robert Frobisher. It gives Cloud Atlas its name.",
-  e:[{b:"ca",y:1931,yl:"1931",k:"n",t:"Frobisher composes it in Belgium, in the house of Vyvyan Ayrs."},
-     {b:"ua",y:1967,yl:"1967",k:"a",t:"Jasper listens to a rare recording of it."},
-     {b:"ca",y:1975,yl:"1975",k:"a",t:"Luisa Rey hears it in a record shop and feels she already knows it."}]},
- {id:"dejima",name:"Dejima",home:"ta",icon:"fan",role:"A small fan-shaped island in Nagasaki harbour. The Dutch trading post in Japan (a real place).",
-  e:[{b:"ta",y:1799,yl:"1799",k:"n",t:"The main setting. Jacob and Dr Marinus live and work there."},
-     {b:"ua",y:1968,yl:"1968",k:"m",t:"Marinus and Esther tell Jasper what happened to his ancestor there."},
-     {b:"btc",p:5,y:2025,yl:"2025",k:"m",t:"Marinus remembers a past life as a surgeon and scholar there."}]},
- {id:"horology",name:"Horology",home:"ta",icon:"glass",role:"Souls that come back in new bodies naturally, and fight those who steal souls.",
-  e:[{b:"ta",y:1799,yl:"1799",k:"f",t:"Dr Marinus is already one of them, but the book only hints at it."},
+ {id:"spyglass",name:"Spyglass magazine",home:"ca",icon:"mag",role:"An American magazine that hires the brave.",
+  e:[{b:"ua",y:1968,yl:"1968",k:"a",t:"Luisa Rey is on staff when she meets Utopia Avenue."},
+     {b:"ca",y:1975,yl:"1975",k:"a",t:"Luisa Rey's byline, while she digs into the nuclear power plant."},
+     {b:"btc",p:3,y:2004,yl:"2004",k:"a",t:"Ed Brubeck files from Iraq."}]},
+ {id:"sextet",name:"Cloud Atlas Sextet",home:"ca",icon:"music",role:"Robert Frobisher's music, and the title Cloud Atlas borrows.",
+  e:[{b:"ca",y:1931,yl:"1931",k:"n",t:"Frobisher writes it in Belgium, under Vyvyan Ayrs's roof."},
+     {b:"ua",y:1967,yl:"1967",k:"a",t:"Jasper finds a rare recording, and listens."},
+     {b:"ca",y:1975,yl:"1975",k:"a",t:"Luisa Rey hears it in a record shop and knows it, somehow, from before."}]},
+ {id:"dejima",name:"Dejima",home:"ta",icon:"fan",role:"A fan-shaped island in Nagasaki harbour. Japan's Dutch trading post. A real place.",
+  e:[{b:"ta",y:1799,yl:"1799",k:"n",t:"The main stage. Jacob and Dr Marinus live and work there."},
+     {b:"ua",y:1968,yl:"1968",k:"m",t:"Marinus and Esther tell Jasper what befell his ancestor there."},
+     {b:"btc",p:5,y:2025,yl:"2025",k:"m",t:"Marinus remembers a past life there as surgeon and scholar."}]},
+ {id:"horology",name:"Horology",home:"ta",icon:"glass",role:"Souls reborn by nature, not by theft, and at war with the thieves.",
+  e:[{b:"ta",y:1799,yl:"1799",k:"f",t:"Dr Marinus is already one of them. The book only winks at it."},
      {b:"ua",y:1968,yl:"1968",k:"a",t:"Marinus and Esther Little help Jasper."},
-     {b:"sh",y:2015,yl:"2015",k:"a",t:"Marinus comes to Slade House."},
-     {b:"btc",p:5,y:2025,yl:"2025",k:"n",t:"Marinus explains Horology and gathers the Horologists for one big attack."}]},
- {id:"souleaters",name:"Soul-eaters",home:"ta",icon:"wine",role:"People who steal souls to live forever. The Bone Clocks calls them Anchorites, or Carnivores.",
-  e:[{b:"ta",y:1800,yl:"1800",k:"a",t:"Abbot Enomoto's order on Mount Shiranui keeps a dark secret about long life.",x:"Later books show it is the same kind of evil as the Anchorites."},
-     {b:"ua",y:1968,yl:"1968",k:"a",t:"The knocking voice in Jasper's head comes from an old enemy.",x:"It is the spirit of Abbot Enomoto."},
-     {b:"sh",y:1979,yl:"1979",k:"n",t:"Every nine years the Grayer twins pull a guest into Slade House.",x:"They feed on the guest's soul to stay alive."},
-     {b:"btc",p:2,y:1991,yl:"1991",k:"a",t:"Hugo meets people who say they have found a way to cheat death.",x:"They are the Anchorites, and Hugo joins them."},
-     {b:"btc",p:5,y:2025,yl:"2025",k:"a",t:"Marinus explains how the Anchorites stay young: they drain the souls of gifted people into Black Wine."}]},
- {id:"noncorpum",name:"Souls without bodies",home:"gw",icon:"wisp",role:"A soul that lives inside other people. Later books call it a noncorpum.",
-  e:[{b:"gw",y:1998,yl:"1990s",k:"n",t:"The narrator of the Mongolia section is a soul without a body. It moves from host to host and looks for where it came from."},
-     {b:"ua",y:1968,yl:"1968",k:"a",t:"Knock Knock is a soul without a body that lives in Jasper."},
-     {b:"btc",p:5,y:2025,yl:"2025",k:"a",t:"Marinus explains how a soul can hide inside another person.",x:"Esther Little hid in Holly's mind like this since 1984."}]},
- {id:"panopticon",name:"PanOpticon",home:"n9d",icon:"tower",role:"A building in Tokyo, and later a film.",
-  e:[{b:"n9d",y:2000,yl:"c. 2000",k:"n",t:"Eiji Miyake waits in a caf\u00e9 across from the PanOpticon building. Inside is someone who knows who his father is."},
-     {b:"ua",y:1968,yl:"1968",k:"f",t:"Jasper watches a film called PanOpticon. Mitchell repeats a full paragraph from number9dream here."}]},
- {id:"prescience",name:"Prescience",home:"ca",icon:"eye",role:"A group that keeps science alive while the world falls.",
-  e:[{b:"btc",p:6,y:2043,yl:"2043",k:"a",t:"You get a glimpse of Prescience as the old world falls apart."},
-     {b:"ca",y:2300,yl:"far future",k:"a",t:"The Prescients come to Hawaii from a high-tech place to study the world after the Fall."}]}
+     {b:"sh",y:2015,yl:"2015",k:"a",t:"Marinus visits Slade House."},
+     {b:"btc",p:5,y:2025,yl:"2025",k:"n",t:"Marinus explains it all, then rallies the Horologists to attack."}]},
+ {id:"souleaters",name:"Soul-eaters",home:"ta",icon:"wine",role:"People who buy forever with other people's souls. The Bone Clocks calls them Anchorites, or Carnivores.",
+  e:[{b:"ta",y:1800,yl:"1800",k:"a",t:"Abbot Enomoto's order on Mount Shiranui guards a dark secret about long life.",x:"Later books reveal it: the same evil as the Anchorites."},
+     {b:"ua",y:1968,yl:"1968",k:"a",t:"The knocking in Jasper's head belongs to an old enemy.",x:"It is the spirit of Abbot Enomoto."},
+     {b:"sh",y:1979,yl:"1979",k:"n",t:"Every nine years, the Grayer twins lure a guest into Slade House.",x:"They eat the guest's soul to keep themselves alive."},
+     {b:"btc",p:2,y:1991,yl:"1991",k:"a",t:"Hugo meets people who say they have found a way to cheat death.",x:"They are Anchorites. Hugo signs up."},
+     {b:"btc",p:5,y:2025,yl:"2025",k:"a",t:"Marinus spells out the recipe for Anchorite youth: drain a gifted soul, decant it as Black Wine."}]},
+ {id:"noncorpum",name:"Souls without bodies",home:"gw",icon:"wisp",role:"A bodiless soul, lodging in others. Later called a noncorpum.",
+  e:[{b:"gw",y:1998,yl:"1990s",k:"n",t:"The Mongolia section's narrator is a bodiless soul, hopping from host to host in search of where it came from."},
+     {b:"ua",y:1968,yl:"1968",k:"a",t:"Knock Knock is a bodiless soul, and Jasper is its lodging."},
+     {b:"btc",p:5,y:2025,yl:"2025",k:"a",t:"Marinus explains how one soul can hide inside another person.",x:"So Esther Little has hidden in Holly's mind since 1984."}]},
+ {id:"panopticon",name:"PanOpticon",home:"n9d",icon:"tower",role:"A Tokyo building, and later a film.",
+  e:[{b:"n9d",y:2000,yl:"c. 2000",k:"n",t:"Eiji Miyake watches it from a caf\u00e9. Inside is someone who knows who his father is."},
+     {b:"ua",y:1968,yl:"1968",k:"f",t:"Jasper watches a film called PanOpticon. A whole paragraph is lifted from number9dream."}]},
+ {id:"prescience",name:"Prescience",home:"ca",icon:"eye",role:"The people keeping science alive while the world goes dark.",
+  e:[{b:"btc",p:6,y:2043,yl:"2043",k:"a",t:"A first glimpse of Prescience, as the old world comes apart."},
+     {b:"ca",y:2300,yl:"far future",k:"a",t:"The Prescients come to Hawaii from their high-tech enclave to study the world after the Fall."}]}
 ];
 T.forEach(t=>t.kind="thing");C.forEach(c=>c.kind="person");C.push(...T);
 const LINKS=[
- ["marinus","jacob","ta","teacher and friend"],["jacob","enomoto","ta","enemies"],["marinus","enomoto","ta","enemies"],
+ ["marinus","jacob","ta","mentor and friend"],["jacob","enomoto","ta","enemies"],["marinus","enomoto","ta","enemies"],
  ["jacob","jasper","ua","ancestor"],["enomoto","jasper","ua","Knock Knock"],["marinus","jasper","ua","helps him"],["esther","jasper","ua","helps him"],
- ["marinus","esther","ua","fellow Horologist"],["frobisher","jasper","ua","his music"],["luisa","bat","gw","radio caller"],
- ["frobisher","eva","ca","in love"],["luisa","ed","btc","both write for Spyglass",3],
+ ["marinus","esther","ua","fellow Horologist"],["frobisher","jasper","ua","his music"],["luisa","bat","gw","late-night caller"],
+ ["frobisher","eva","ca","smitten"],["luisa","ed","btc","same masthead",3],
  ["spyglass","luisa","ca","reporter"],["spyglass","luisa","ua","reporter"],["spyglass","ed","btc","reporter",3],
  ["sextet","frobisher","ca","composer"],["sextet","luisa","ca","hears it"],["sextet","jasper","ua","listens"],
  ["dejima","jacob","ta","works there"],["dejima","marinus","ta","works there"],
  ["horology","marinus","ta","member"],["horology","esther","ua","member"],
  ["souleaters","enomoto","ta","one of them"],["souleaters","hugo","btc","joins them",2],["souleaters","darnoq","btc","one of them",2],
- ["noncorpum","jasper","ua","Knock Knock"],["noncorpum","esther","btc","hides like this",5],["noncorpum","enomoto","ua","Knock Knock"],
+ ["noncorpum","jasper","ua","Knock Knock"],["noncorpum","esther","btc","hid this way",5],["noncorpum","enomoto","ua","Knock Knock"],
  ["panopticon","jasper","ua","watches the film"],["crispin","levon","btc","old memories",4],["hugo","crispin","btc","Iceland",4],
- ["hugo","darnoq","btc","Cambridge",2],["darnoq","marinus","btc","false offer",5],["mo","marinus","btc","Sheep's Head",6],
+ ["hugo","darnoq","btc","Cambridge",2],["darnoq","marinus","btc","poisoned offer",5],["mo","marinus","btc","Sheep's Head",6],
  ["luisa","jasper","ua","same band world"],["crispin","luisa","ua","same party world"]
 ].filter(l=>!(l[0]==="luisa"&&l[1]==="jasper")&&!(l[0]==="crispin"&&l[1]==="luisa"));
 
@@ -518,10 +518,10 @@ function openSheet(id){
   const c=byId[id];lastF=document.activeElement;
   const es=c.e.filter(visE).sort((a,b)=>a.y-b.y);
   const tl=es.map(e=>{const b=bookById[e.b];const kind=(c.kind==="thing"?{a:"appears",n:"central",m:"mentioned",f:"echo"}:{a:"appears",n:"main character",m:"mentioned",f:"relative or work"})[e.k];
-    return `<li class="${e.k==="m"?"m":e.k==="f"?"f":""}" style="--b:var(--${b.id})"><h3>${e.yl}<small>${b.t}${e.p?", part "+e.p:""} (${kind})</small></h3><p>${e.t}</p>${e.x?`<button class="reveal" type="button">Show how this story ends for them</button><p class="endtxt" hidden>${e.x}</p>`:""}</li>`}).join("");
+    return `<li class="${e.k==="m"?"m":e.k==="f"?"f":""}" style="--b:var(--${b.id})"><h3>${e.yl}<small>${b.t}${e.p?", part "+e.p:""} (${kind})</small></h3><p>${e.t}</p>${e.x?`<button class="reveal" type="button">Show how it ends for them</button><p class="endtxt" hidden>${e.x}</p>`:""}</li>`}).join("");
   const links=LINKS.filter(l=>(l[0]===id||l[1]===id)&&visLink(l)).map(l=>{const o=byId[l[0]===id?l[1]:l[0]];if(!ok(o.id))return"";
     return `<button class="chip" type="button" data-id="${o.id}">${avatar(o)}<span>${o.name} <small>${l[3]}, ${bookById[l[2]].ab}</small></span></button>`}).join("");
-  sheet.innerHTML=`<button class="close" type="button" aria-label="Close">\u00d7</button><div class="sheet-top">${aiOn&&PORTRAITS[c.id]?`<button class="pbig" type="button" aria-label="Show bigger portrait of ${c.name}">${avatar(c)}<span class="zoom">Tap to enlarge</span></button>`:avatar(c)}<div><h2 id="sheetName">${c.name}</h2><p class="role">${c.role}</p>${aiOn&&PORTRAITS[c.id]?`<p class="ai-cap">AI-generated image. Probably not how you imagined it.</p>`:""}</div></div><ul class="tl">${tl}</ul>${links?`<div class="links"><h4>Connected to</h4><div class="chips">${links}</div></div>`:""}`;
+  sheet.innerHTML=`<button class="close" type="button" aria-label="Close">\u00d7</button><div class="sheet-top">${aiOn&&PORTRAITS[c.id]?`<button class="pbig" type="button" aria-label="Show bigger portrait of ${c.name}">${avatar(c)}<span class="zoom">Tap to enlarge</span></button>`:avatar(c)}<div><h2 id="sheetName">${c.name}</h2><p class="role">${c.role}</p>${aiOn&&PORTRAITS[c.id]?`<p class="ai-cap">AI-generated. Probably not who you pictured.</p>`:""}</div></div><ul class="tl">${tl}</ul>${links?`<div class="links"><h4>Connected to</h4><div class="chips">${links}</div></div>`:""}`;
   sheet.dataset.id=id;sheet.scrollTop=0;sheet.classList.add("open");scrim.classList.add("open");sheet.querySelector(".close").focus();
 }
 const viewer=document.getElementById("viewer");
@@ -529,7 +529,7 @@ function openViewer(id){
   const c=byId[id],src=PORTRAITS[id],img=viewer.querySelector("img");
   img.onerror=()=>{img.onerror=null;img.src=src};
   img.src=src.replace(/\.webp$/,"-lg.webp");img.alt="AI-generated portrait of "+c.name;
-  viewer.querySelector("p").textContent=c.name+". AI-generated image. Probably not how you imagined it.";
+  viewer.querySelector("p").textContent=c.name+". AI-generated. Probably not who you pictured.";
   viewer.hidden=false;viewer.querySelector(".close").focus();
 }
 function closeViewer(){viewer.hidden=true;const pb=sheet.querySelector(".pbig");if(pb)pb.focus()}
