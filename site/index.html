@@ -18,6 +18,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400;1,9..144,600&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&display=swap" rel="stylesheet">
+<script>
+// Theme: follow the device until the reader picks one, then remember it.
+try{const t=localStorage.getItem("mv-theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}
+</script>
 <style>
 /* Layout: one column of chunky "flat 3D" cards with ink outlines and hard offset shadows; books are the main shapes. */
 :root{
@@ -66,6 +70,14 @@ h1 span{display:block;font-style:italic;font-weight:400;color:var(--sun)}
 .panel{background:var(--panel);border:2px solid var(--edge);border-radius:16px;padding:18px;margin-bottom:22px;position:relative;box-shadow:5px 5px 0 var(--edge)}
 .panel>p{margin:0 0 4px;font-family:var(--display);font-weight:600;font-size:1.5rem;line-height:1.15;text-align:center}
 .note{font-family:var(--display);font-style:italic;font-weight:400;font-size:1rem;line-height:1.35;color:var(--muted);text-align:center;margin:0 0 6px}
+/* theme toggle: a small round key in the hero corner */
+.hero>.theme{position:absolute;top:16px;right:16px;z-index:1;width:44px;height:44px;border-radius:50%;border:2px solid var(--edge);background:#F4F1E8;color:#1B2238;display:grid;place-items:center;cursor:pointer;box-shadow:3px 3px 0 var(--edge);transition:transform .12s,box-shadow .12s}
+.hero>.theme:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--edge)}
+.hero>.theme:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--edge)}
+.theme svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.theme .moon{display:none}
+:root[data-theme="dark"] .theme .sun{display:none}:root[data-theme="dark"] .theme .moon{display:block}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .theme .sun{display:none}:root:not([data-theme="light"]) .theme .moon{display:block}}
 /* the shelf */
 .shelf{list-style:none;margin:0;padding:22px 4px 0;display:grid;grid-template-columns:repeat(8,minmax(0,52px));justify-content:center;align-items:end;gap:5px;min-height:240px}
 .shelf li{display:flex;align-items:flex-end;justify-content:center}
@@ -223,6 +235,7 @@ footer{color:var(--muted);font-size:.8rem;margin-top:18px;max-width:62ch}
 <body>
 <div class="wrap">
   <header class="hero">
+    <button class="theme" type="button" id="themeBtn" aria-label="Switch to dark theme"><svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg><svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M19.5 14.6A8 8 0 0 1 9.4 4.5a8 8 0 1 0 10.1 10.1Z"/><path d="M16.5 3.5l.5 1.5 1.5.5-1.5.5-.5 1.5-.5-1.5-1.5-.5 1.5-.5z" fill="currentColor" stroke="none"/></svg></button>
     <div class="txt">
       <span class="kicker">Eight novels, one world</span>
       <h1>Mitchell<span>verse</span></h1>
@@ -638,6 +651,12 @@ fbForm.addEventListener("submit",async e=>{
   try{await send(fbForm);fbForm.hidden=true;document.getElementById("fbThanks").hidden=false}
   catch(err){document.getElementById("fbErr").hidden=false}
 });
+// Theme toggle. No saved choice means the device setting is used (the CSS media query handles it).
+const themeBtn=document.getElementById("themeBtn"),darkMq=window.matchMedia("(prefers-color-scheme: dark)");
+const curTheme=()=>document.documentElement.dataset.theme||(darkMq.matches?"dark":"light");
+const labelTheme=()=>themeBtn.setAttribute("aria-label",curTheme()==="dark"?"Switch to light theme":"Switch to dark theme");
+themeBtn.addEventListener("click",()=>{const t=curTheme()==="dark"?"light":"dark";document.documentElement.dataset.theme=t;try{localStorage.setItem("mv-theme",t)}catch(e){}labelTheme()});
+darkMq.addEventListener?.("change",labelTheme);labelTheme();
 render();
 </script>
 </body>
