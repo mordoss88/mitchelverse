@@ -264,6 +264,10 @@ html.lock,html.lock body{overflow:hidden}
 .modal .acts{display:flex;justify-content:flex-end;gap:10px;margin-top:18px}
 .fld{display:block;font-family:var(--sans);font-weight:600;font-size:.85rem;margin:0 0 14px}
 .fld input,.fld select,.fld textarea{display:block;width:100%;margin-top:6px;font-family:var(--serif);font-size:1rem;border:2.5px solid var(--edge);background:var(--panel);color:var(--ink);border-radius:12px;padding:9px 10px;box-shadow:inset 2px 2px 0 color-mix(in srgb,var(--edge) 12%,transparent)}
+.chk{display:flex;gap:8px;align-items:center;font-size:.92rem;margin:-4px 0 14px}
+.chk input{width:18px;height:18px;accent-color:var(--edge)}
+.helpers{list-style:none;padding:0;margin:0 0 6px;display:flex;flex-wrap:wrap;gap:8px}
+.helpers li{border:2px solid var(--edge);border-radius:999px;padding:4px 12px;font-size:.92rem}
 .thanks{font-family:var(--display);font-weight:600;font-size:1.25rem;margin:6px 0 0}
 .err{color:#D93A5E;font-family:var(--sans);font-weight:600;font-size:.85rem;margin:6px 0 0}
 section.panel h2,.about h2{font-family:var(--display);font-weight:600;font-size:1.65rem;margin:0 0 8px;line-height:1.1}
@@ -344,6 +348,7 @@ footer{color:var(--muted);font-size:.8rem;margin-top:18px;max-width:62ch}
       </label>
       <label class="fld">What should change?<textarea name="message" rows="4" required></textarea></label>
       <label class="fld">Your Reddit name (optional)<input name="reddit" autocomplete="off"></label>
+      <label class="chk"><input type="checkbox" name="credit" value="yes"> Thank me by this name in the list of readers who helped</label>
       <button class="btn solid" type="submit">Send</button>
       <p class="err" id="fbErr" hidden>Could not send your message. Check your connection and try again.</p>
     </form>
@@ -353,9 +358,16 @@ footer{color:var(--muted);font-size:.8rem;margin-top:18px;max-width:62ch}
   <section class="about">
     <h2>About this map</h2>
     <p>A free fan project by one reader of David Mitchell's books, with no link to the author or his publishers. Every word is my own, and so is every drawing and icon. Maps lie sometimes, so tell me when this one does.</p>
+    <button class="btn" type="button" id="thxBtn" hidden>Readers who helped</button>
   </section>
 </div>
 <div class="scrim" id="scrim"></div>
+<div class="modal" id="thxModal" role="dialog" aria-modal="true" aria-labelledby="thxModalT" hidden><div class="box">
+  <h2 id="thxModalT">Readers who helped</h2>
+  <p>These readers sent fixes and links through the form. The map is better for every one.</p>
+  <ul class="helpers" id="thxList"></ul>
+  <div class="acts"><button class="btn solid" type="button" id="thxClose">Close</button></div>
+</div></div>
 <div class="modal" id="aiModal" role="dialog" aria-modal="true" aria-labelledby="aiModalT" hidden><div class="box">
   <h2 id="aiModalT">Turn on AI portraits?</h2>
   <p>These portraits come from an AI image tool. They are not official, and they are not from the books.</p>
@@ -370,6 +382,8 @@ footer{color:var(--muted);font-size:.8rem;margin-top:18px;max-width:62ch}
 <script>
 // AI portraits: put a square image (about 256x256 px, WebP) in the portraits folder,
 // then add one line here. Ids are the "id" values in the lists below.
+// Readers who sent corrections and agreed to be named (form field "credit").
+const HELPERS=["Royalewithcheese51"];
 const PORTRAITS={
   marinus:"portraits/marinus.webp",
   jacob:"portraits/jacob.webp",
@@ -716,7 +730,12 @@ qClr.onclick=()=>{qIn.value=q="";qClr.hidden=true;render();qIn.focus()};
 document.getElementById("view").addEventListener("click",e=>{const r=e.target.closest("[data-id]");if(r)openSheet(r.dataset.id)});
 sheet.addEventListener("click",e=>{if(e.target.closest(".close"))return closeSheet();const pb=e.target.closest(".pbig");if(pb)return openViewer(sheet.dataset.id);const rv=e.target.closest(".reveal");if(rv){rv.nextElementSibling.hidden=false;rv.remove();return}const ch=e.target.closest(".chip");if(ch)openSheet(ch.dataset.id)});
 scrim.addEventListener("click",closeSheet);
-document.addEventListener("keydown",e=>{if(e.key!=="Escape")return;if(!aiModal.hidden)closeAiModal(false);else if(!viewer.hidden)closeViewer();else if(sheet.classList.contains("open"))closeSheet()});
+document.addEventListener("keydown",e=>{if(e.key!=="Escape")return;if(!thxModal.hidden)thxModal.hidden=true;else if(!aiModal.hidden)closeAiModal(false);else if(!viewer.hidden)closeViewer();else if(sheet.classList.contains("open"))closeSheet()});
+const thxModal=document.getElementById("thxModal"),thxBtn=document.getElementById("thxBtn");
+if(HELPERS.length){thxBtn.hidden=false;document.getElementById("thxList").innerHTML=HELPERS.map(n=>`<li>${esc(n)}</li>`).join("")}
+thxBtn.onclick=()=>{thxModal.hidden=false;document.getElementById("thxClose").focus()};
+document.getElementById("thxClose").onclick=()=>{thxModal.hidden=true;thxBtn.focus()};
+thxModal.addEventListener("click",e=>{if(e.target===thxModal)thxModal.hidden=true});
 const aiModal=document.getElementById("aiModal"),aiToggle=document.getElementById("aiToggle");
 const aiSeen=()=>{try{return localStorage.getItem("mv-ai-ok")==="1"}catch(e){return false}};
 function closeAiModal(on){
