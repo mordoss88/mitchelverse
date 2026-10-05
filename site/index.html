@@ -276,6 +276,8 @@ section.panel>p,.about p{margin:0 0 14px;font-size:.95rem;max-width:62ch;font-fa
 .about{margin-top:36px;text-align:center}
 .about p{margin-left:auto;margin-right:auto;color:var(--muted);text-align:center}
 footer{color:var(--muted);font-size:.8rem;margin-top:18px;max-width:62ch}
+.about p.mail{font-family:var(--sans);font-weight:600;font-size:.9rem;margin-bottom:16px}
+.mail a{color:var(--ink);text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:3px}
 @media (max-width:480px){.head,.row,.sub{grid-template-columns:minmax(130px,40%) 1fr}.who{gap:7px;padding-left:8px}.who .av{width:32px;height:32px}.who span{font-size:.9rem}.spine .t{font-size:.74rem}.tabs button{font-size:1rem}.shelf{gap:3px}.panel{padding:16px 14px}}
 @media (prefers-reduced-motion: reduce){.snack,.sheet,.scrim,.track,.track::after,.row,.btn,.chip,.moment,.spine,.tabs button{transition:none}.spine:hover,.spine[aria-pressed="true"]:hover{transform:translateY(-10px)}}
 </style>
@@ -358,6 +360,7 @@ footer{color:var(--muted);font-size:.8rem;margin-top:18px;max-width:62ch}
   <section class="about">
     <h2>About this map</h2>
     <p>A free fan project by one reader of David Mitchell's books, with no link to the author or his publishers. Every word is my own, and so is every drawing and icon. Maps lie sometimes, so tell me when this one does.</p>
+    <p class="mail">Write to me: <a id="mail" href="#" data-u="milos8petrovic8" data-d="gmail.com">milos8petrovic8 (at) gmail (dot) com</a></p>
     <button class="btn" type="button" id="thxBtn" hidden>Readers who helped</button>
   </section>
 </div>
@@ -383,6 +386,8 @@ footer{color:var(--muted);font-size:.8rem;margin-top:18px;max-width:62ch}
 // AI portraits: put a square image (about 256x256 px, WebP) in the portraits folder,
 // then add one line here. Ids are the "id" values in the lists below.
 // Readers who sent corrections and agreed to be named (form field "credit").
+// Email is built here so simple scrapers do not find it in the page.
+(()=>{const a=document.getElementById("mail");const e=a.dataset.u+"@"+a.dataset.d;a.href="mailto:"+e;a.textContent=e})();
 const HELPERS=["Royalewithcheese51"];
 const PORTRAITS={
   marinus:"portraits/marinus.webp",
