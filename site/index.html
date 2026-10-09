@@ -172,6 +172,9 @@ h1 span{display:block;font-style:italic;font-weight:400;color:var(--sun)}
 .mapbox{position:relative;z-index:0;isolation:isolate;background:var(--panel);border:2px solid var(--edge);border-radius:16px;overflow:hidden;box-shadow:5px 5px 0 var(--edge)}
 #map{height:min(64vh,520px);min-height:340px;background:var(--lock);font-family:var(--sans)}
 .leaflet-container a{color:var(--ink)}
+.leaflet-tile-pane{filter:saturate(.45) contrast(.92) brightness(1.04)}
+:root[data-theme="dark"] .leaflet-tile-pane{filter:invert(1) hue-rotate(200deg) saturate(.4) brightness(.85) contrast(.9)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .leaflet-tile-pane{filter:invert(1) hue-rotate(200deg) saturate(.4) brightness(.85) contrast(.9)}}
 .leaflet-control-attribution{font-size:.62rem;background:color-mix(in srgb,var(--panel) 85%,transparent)!important;color:var(--muted)}
 .leaflet-bar{border:2px solid var(--edge)!important;border-radius:10px!important;box-shadow:3px 3px 0 var(--edge);overflow:hidden}
 .leaflet-bar a{background:var(--panel)!important;color:var(--ink)!important;border-bottom-color:var(--line)!important;font-family:var(--sans)}
@@ -770,8 +773,7 @@ const plEntries=p=>p.e.filter(en=>visP(en)&&inF(byId[en[0]])&&(!q.trim()||qHit(p
 const plBooks=es=>BOOKS.filter(b=>es.some(en=>en[1]===b.id));
 const plGrad=es=>{const bs=plBooks(es);if(!bs.length)return "var(--lock)";const w=100/bs.length;return `conic-gradient(${bs.map((b,i)=>`var(--${b.id}) ${i*w}% ${(i+1)*w}%`).join(",")})`};
 const pinHtml=(p,es)=>`<span class="pin${p.rough||!p.ll?" rough":""}" style="--g:${plGrad(es)}"><b>${new Set(es.map(en=>en[0])).size}</b></span>`;
-const TILES=()=>`https://{s}.basemaps.cartocdn.com/${curTheme()==="dark"?"dark_all":"light_all"}/{z}/{x}/{y}{r}.png`;
-let lmap=null,ltiles=null,lpins=null,lfit="",lload=null;
+let lmap=null,lpins=null,lfit="",lload=null;
 function loadLeaflet(){
   if(window.L)return Promise.resolve();
   return lload||(lload=new Promise((ok,bad)=>{const s=document.createElement("script");s.src="vendor/leaflet/leaflet.js";s.onload=ok;s.onerror=()=>{lload=null;bad()};document.head.appendChild(s)}));
@@ -785,7 +787,8 @@ function renderMap(){
   loadLeaflet().then(()=>{
     if(!lmap){
       lmap=L.map("map",{worldCopyJump:true,scrollWheelZoom:false,minZoom:0,maxZoom:12,zoomSnap:.25}).setView([30,20],1.5);
-      ltiles=L.tileLayer(TILES(),{subdomains:"abcd",maxZoom:19,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'}).addTo(lmap);
+      // Free OpenStreetMap tiles, no key. CSS softens them to match the site, and turns them dark in dark mode.
+      L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(lmap);
       lpins=L.layerGroup().addTo(lmap);
       // Wheel zoom only after the reader clicks into the map, so the page still scrolls past it.
       lmap.on("click focus",()=>lmap.scrollWheelZoom.enable());lmap.on("mouseout blur",()=>lmap.scrollWheelZoom.disable());
@@ -940,8 +943,8 @@ document.getElementById("fbAgain").onclick=()=>{document.getElementById("fbThank
 const themeBtn=document.getElementById("themeBtn"),darkMq=window.matchMedia("(prefers-color-scheme: dark)");
 const curTheme=()=>document.documentElement.dataset.theme||(darkMq.matches?"dark":"light");
 const labelTheme=()=>themeBtn.setAttribute("aria-label",curTheme()==="dark"?"Switch to light theme":"Switch to dark theme");
-themeBtn.addEventListener("click",()=>{const t=curTheme()==="dark"?"light":"dark";document.documentElement.dataset.theme=t;try{localStorage.setItem("mv-theme",t)}catch(e){}labelTheme();if(ltiles)ltiles.setUrl(TILES())});
-darkMq.addEventListener?.("change",()=>{labelTheme();if(ltiles)ltiles.setUrl(TILES())});labelTheme();
+themeBtn.addEventListener("click",()=>{const t=curTheme()==="dark"?"light":"dark";document.documentElement.dataset.theme=t;try{localStorage.setItem("mv-theme",t)}catch(e){}labelTheme()});
+darkMq.addEventListener?.("change",labelTheme);labelTheme();
 render();
 </script>
 </body>
