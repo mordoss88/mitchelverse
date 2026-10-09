@@ -6,6 +6,7 @@ A small, free, spoiler-safe fan site. It maps the people, places and ideas that 
 
 - `site/` – the website. `site/index.html` contains all data, drawings, styles and code.
 - `site/portraits/` – optional AI portraits (WebP).
+- `site/vendor/` – Cytoscape (MIT), used by the "As a web" view. It loads only when a reader opens that view.
 - `portraits-src/` – put Gemini images here before you convert them (not saved in git).
 - `tools/generate-portraits.mjs` – converts portraits.
 - `scripts/tmux.sh` – tmux session with dev server, portraits and shell.
