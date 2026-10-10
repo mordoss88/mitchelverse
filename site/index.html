@@ -18,6 +18,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%2322304F'/%3E%3Cpath d='M5 21C10 13 16 10 22 10' stroke='%23EBD08A' stroke-width='2' fill='none' stroke-linecap='round' opacity='.7'/%3E%3Ccircle cx='23' cy='10' r='3.2' fill='%23EBD08A'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="vendor/leaflet/leaflet.css">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400;1,9..144,600&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&display=swap" rel="stylesheet">
 <script>
 // Theme: follow the device until the reader picks one, then remember it.
@@ -113,7 +114,8 @@ h1 span{display:block;font-style:italic;font-weight:400;color:var(--sun)}
 .btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--edge)}
 .btn.solid{background:var(--hero);color:#F4F1E8}
 /* view tabs and filters: chunky keys */
-.tabs{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:8px 0 0}
+.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:8px 0 0}
+@media (max-width:560px){.tabs:not(.f){grid-template-columns:1fr 1fr}}
 .tabs button{border:2px solid var(--edge);border-radius:14px;background:var(--panel);padding:11px 8px;font-family:var(--display);font-weight:600;font-size:1.12rem;cursor:pointer;box-shadow:4px 4px 0 var(--edge);transition:transform .12s,box-shadow .12s,background .12s}
 .tabs button[aria-selected="true"]{background:var(--sky);color:var(--on);transform:translate(3px,3px);box-shadow:2px 2px 0 var(--edge)}
 .tabs.f{grid-template-columns:repeat(3,auto);justify-content:center;gap:10px;margin:18px 0 14px}
@@ -180,6 +182,38 @@ h1 span{display:block;font-style:italic;font-weight:400;color:var(--sun)}
 .webkey span{display:inline-flex;align-items:center;gap:6px}
 .webkey i{width:26px;height:0;border-top:2.5px solid var(--muted)}
 .webkey i.n{border-top-width:5px}.webkey i.m{border-top-style:dashed}.webkey i.f{border-top-style:dotted;border-top-width:3px}.webkey i.l{border-top-color:var(--ink)}
+/* the world map */
+.mapbox{position:relative;z-index:0;isolation:isolate;background:var(--panel);border:2px solid var(--edge);border-radius:16px;overflow:hidden;box-shadow:5px 5px 0 var(--edge)}
+#map{height:min(64vh,520px);min-height:340px;background:var(--lock);font-family:var(--sans)}
+.leaflet-container a{color:var(--ink)}
+.leaflet-tile-pane{filter:saturate(.45) contrast(.92) brightness(1.04)}
+:root[data-theme="dark"] .leaflet-tile-pane{filter:invert(1) hue-rotate(200deg) saturate(.4) brightness(.85) contrast(.9)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .leaflet-tile-pane{filter:invert(1) hue-rotate(200deg) saturate(.4) brightness(.85) contrast(.9)}}
+.leaflet-control-attribution{font-size:.62rem;background:color-mix(in srgb,var(--panel) 85%,transparent)!important;color:var(--muted)}
+.leaflet-bar{border:2px solid var(--edge)!important;border-radius:10px!important;box-shadow:3px 3px 0 var(--edge);overflow:hidden}
+.leaflet-bar a{background:var(--panel)!important;color:var(--ink)!important;border-bottom-color:var(--line)!important;font-family:var(--sans)}
+.pin{display:grid;place-items:center;width:34px;height:34px;border-radius:50% 50% 50% 6px;transform:rotate(-45deg);background:var(--g);border:2.5px solid #1B2238;box-shadow:3px 3px 0 #1B2238;cursor:pointer;transition:transform .12s,box-shadow .12s}
+.pin b{transform:rotate(45deg);display:grid;place-items:center;width:18px;height:18px;border-radius:50%;background:#FFF;border:2px solid #1B2238;font:800 .66rem/1 var(--sans);color:#1B2238}
+.pin.rough{border-style:dashed}
+.lf-pin:hover .pin,.lf-pin:focus-visible .pin{transform:rotate(-45deg) translate(-2px,-2px);box-shadow:5px 5px 0 #1B2238}
+.lf-pin:focus-visible{outline:none}.lf-pin:focus-visible .pin{outline:3px solid var(--pink);outline-offset:2px}
+.leaflet-tooltip.ptip{background:var(--hero);color:#F4F1E8;border:2px solid var(--edge);border-radius:9px;box-shadow:3px 3px 0 var(--edge);font:600 .82rem/1.2 var(--sans);padding:4px 9px}
+.leaflet-tooltip.ptip::before{display:none}
+.mapkey{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 16px;font:500 .8rem/1.3 var(--sans);color:var(--muted);margin:14px 0 6px}
+.mapkey span{display:inline-flex;align-items:center;gap:6px}
+.pk{width:14px;height:14px;border-radius:50% 50% 50% 3px;transform:rotate(-45deg);background:var(--sky);border:2px solid var(--edge)}
+.pk.rough{border-style:dashed;border-color:var(--muted);background:var(--panel)}
+@media (max-width:480px){#map{height:420px;min-height:0}}
+.places h3{font-family:var(--display);font-weight:600;font-size:1.15rem;margin:18px 0 10px;text-align:center}
+.places .chips{justify-content:center}
+.chip.plc{padding:6px 14px 6px 8px}
+.chip.plc i{width:22px;height:22px;flex:none;border-radius:50% 50% 50% 4px;transform:rotate(-45deg);background:var(--g);border:2px solid var(--edge)}
+.chip.plc.off i{border-style:dashed}
+.sheet-top .pinbig{width:72px;height:72px;flex:none;display:grid;place-items:center}
+.sheet-top .pinbig .pin{width:52px;height:52px;cursor:default}
+.sheet-top .pinbig .pin b{width:26px;height:26px;font-size:.9rem}
+.rough-note{font:600 .78rem/1.4 var(--sans);color:var(--muted);margin:8px 0 0;padding:4px 10px;border:1.5px dashed var(--edge);border-radius:8px;width:fit-content}
+.tl .chip{margin-top:8px}
 /* year view: stacked cards */
 .years{list-style:none;margin:0;padding:0 0 0 72px;position:relative}
 .years::before{content:"";position:absolute;left:56px;top:6px;bottom:6px;width:3px;border-radius:2px;background:var(--rail)}
@@ -291,7 +325,7 @@ section.panel>p,.about p{margin:0 0 14px;font-size:.95rem;max-width:62ch;font-fa
 footer{color:var(--muted);font-size:.8rem;margin-top:18px;max-width:62ch}
 .about p.mail{font-family:var(--sans);font-weight:600;font-size:.9rem;margin-bottom:16px}
 .mail a{color:var(--ink);text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:3px}
-@media (max-width:480px){.tabs{gap:8px}.tabs button{padding:10px 4px}.head,.row,.sub{grid-template-columns:minmax(130px,40%) 1fr}.who{gap:7px;padding-left:8px}.who .av{width:32px;height:32px}.who span{font-size:.9rem}.spine .t{font-size:.74rem}.tabs button{font-size:1rem}.shelf{gap:3px}.panel{padding:16px 14px}}
+@media (max-width:480px){.head,.row,.sub{grid-template-columns:minmax(130px,40%) 1fr}.who{gap:7px;padding-left:8px}.who .av{width:32px;height:32px}.who span{font-size:.9rem}.spine .t{font-size:.74rem}.tabs button{font-size:.95rem;padding:9px 4px;line-height:1.15}.tabs{gap:8px}.tabs.f{gap:10px}.shelf{gap:3px}.panel{padding:16px 14px}}
 @media (prefers-reduced-motion: reduce){.snack,.sheet,.scrim,.track,.track::after,.row,.btn,.chip,.moment,.spine,.tabs button{transition:none}.spine:hover,.spine[aria-pressed="true"]:hover{transform:translateY(-10px)}}
 </style>
 </head>
@@ -326,6 +360,7 @@ footer{color:var(--muted);font-size:.8rem;margin-top:18px;max-width:62ch}
     <button type="button" role="tab" id="tBook" aria-selected="true">By book</button>
     <button type="button" role="tab" id="tYear" aria-selected="false">By year in the story</button>
     <button type="button" role="tab" id="tWeb" aria-selected="false">As a web</button>
+    <button type="button" role="tab" id="tMap" aria-selected="false">On the map</button>
   </div>
 
   <div class="tabs f" role="group" aria-label="What to show">
@@ -346,6 +381,11 @@ footer{color:var(--muted);font-size:.8rem;margin-top:18px;max-width:62ch}
   </div>
   <p class="count" id="count" aria-live="polite"></p>
   <div id="view"></div>
+  <div id="mapView" hidden>
+    <div class="mapbox"><div id="map" role="region" aria-label="World map of places from the books"></div></div>
+    <p class="mapkey"><span><i class="pk"></i>A real place</span><span><i class="pk rough"></i>A rough spot (tap it to see why)</span></p>
+    <div class="places" id="placeList"></div>
+  </div>
 
   <p class="note" style="margin-top:14px">Tap anyone or anything to look closer. Endings stay under a sheet until you lift it.</p>
 
@@ -586,6 +626,62 @@ const LINKS=[
  ["luisa","jasper","ua","same band world"],["crispin","luisa","ua","same party world"]
 ].filter(l=>!(l[0]==="luisa"&&l[1]==="jasper")&&!(l[0]==="crispin"&&l[1]==="luisa"));
 
+// Places on the world map. ll: latitude and longitude. rough: the pin is only near the place (vague in the book, or an invented town nearby).
+// No ll means an invented place with no spot on a real map; those go in the list under the map.
+// thing: the id of a card for the place itself, so that card links back to its pin.
+// Each entry: [id of a person or thing, book, Bone Clocks part or 0, kind (as in C), text, covered ending (optional)].
+const PLACES=[
+ {id:"dejima",name:"Dejima, Nagasaki",thing:"dejima",ll:[32.7437,129.873],note:"A walled, fan-shaped island in Nagasaki harbour. For two centuries, Japan's one door to the West.",
+  e:[["jacob","ta",0,"n","Arrives as a clerk to clean up crooked books."],["marinus","ta",0,"a","Surgeon and scholar. Lives and works here."],
+     ["mo","ta",0,"f","Con Twomey, an Irish carpenter, works on the island.","His real name is Muntervary."],["horology","ta",0,"f","Dr Marinus is already a Horologist. The book only winks."],
+     ["jasper","ua",0,"m","Learns what happened to his ancestor here."],["jacob","btc",5,"m","Marinus remembers getting Scarlatti sheet music from Jacob here."]]},
+ {id:"tokyo",name:"Tokyo",ll:[35.6812,139.7671],note:"Eiji Miyake comes here from a small island to find his father.",
+  e:[["panopticon","n9d",0,"n","The tower Eiji watches from a café across the road."],["suhbataar","n9d",0,"a","Turns up again, still not a social caller."]]},
+ {id:"hongkong",name:"Hong Kong",ll:[22.282,114.1588],note:"Ghostwritten's money-and-guilt chapter.",
+  e:[["brose","gw",0,"n","A British lawyer, moving money he would rather not ask about."]]},
+ {id:"mongolia",name:"Mongolia",ll:[47.9184,106.9177],rough:"The chapter crosses Mongolia. The pin sits on Ulaanbaatar.",note:"Steppe, trains and a soul looking for where it began.",
+  e:[["noncorpum","gw",0,"n","A bodiless soul rides from host to host, looking for its own beginning."],["suhbataar","gw",0,"a","A hard man on a job. Not a social call."]]},
+ {id:"chatham",name:"Chatham Islands",ll:[-43.95,-176.56],note:"Remote islands east of New Zealand, home of the Moriori.",
+  e:[["darnoq","ca",0,"a","Mr D'Arnoq tells Adam Ewing what became of the Moriori."]]},
+ {id:"hawaii",name:"Big Island, Hawaii",ll:[19.6,-155.5],note:"Cloud Atlas's far-future valley, long after the Fall.",
+  e:[["prescience","ca",0,"a","The Prescients sail in from their enclave to study what is left."]]},
+ {id:"newyork",name:"New York",ll:[40.758,-73.9855],note:"Late-night radio in one book, a secret war in another.",
+  e:[["bat","gw",0,"a","Hosts Night Train through the small hours."],["luisa","gw",0,"a","Rings in to Bat's show."],
+     ["marinus","btc",5,"n","Dr Iris Fenby, at work in Manhattan."],["horology","btc",5,"n","The Horologists plan their attack from a house in Manhattan."],
+     ["hugo","btc",5,"a","Meets Holly again."],["darnoq","btc",5,"f","Elijah offers to change sides.","A trap. His memories were forged."]]},
+ {id:"zedelghem",name:"Zedelghem, near Bruges",ll:[51.143,3.138],note:"A country house in Belgium, home of the ageing composer Vyvyan Ayrs.",
+  e:[["frobisher","ca",0,"n","Lodges with Ayrs as his helper, and writes on the side."],["sextet","ca",0,"n","Composed here, under Ayrs's roof."],["eva","ca",0,"a","Ayrs's daughter. Teenage, sharp, unimpressed."]]},
+ {id:"london",name:"London",ll:[51.5074,-0.1278],note:"Publishers, pop bands and parties.",
+  e:[["cavendish","gw",0,"a","A walk-on in Ghostwritten's London chapter."],["cavendish","ca",0,"n","Runs a small publishing house, and owes money to the wrong people."],
+     ["levon","ua",0,"a","Builds a band from four strangers and calls it Utopia Avenue."],["jasper","ua",0,"n","Plays London's clubs with the band."],["crispin","ua",0,"a","A small boy at a London party with the band."]]},
+ {id:"hull",name:"Hull",ll:[53.7457,-0.3367],note:"Aurora House, a care home that is easier to enter than to leave.",
+  e:[["cavendish","ca",0,"n","Locked in by mistake. He plans a great escape."]]},
+ {id:"cambridge",name:"Cambridge",ll:[52.2053,0.1218],note:"Hugo Lamb's university years.",
+  e:[["hugo","btc",2,"n","Student, charmer, swindler."],["darnoq","btc",2,"f","Elijah D'Arnoq, a New Zealander in Hugo's set."]]},
+ {id:"gravesend",name:"Gravesend",ll:[51.4416,0.37],note:"A Thames town in Kent. Holly Sykes grows up here, above her parents' pub.",
+  e:[["ed","btc",1,"a","A classmate who tips Holly off about the strawberry farm."],["esther","btc",1,"a","An old woman by the river. Tea, and a strange request.","She cashes in Holly's promise."]]},
+ {id:"bsg",name:"Black Swan Green, Worcestershire",ll:[52.11,-2.3],rough:"Black Swan Green is an invented village. The pin is a rough spot in Worcestershire.",note:"Jason Taylor's thirteenth year, one month at a time.",
+  e:[["brose","bsg",0,"m","One of the boys in Jason's class."],["eva","bsg",0,"a","Old now. Reads Jason's poems and tells him the truth."]]},
+ {id:"clear",name:"Clear Island, Ireland",ll:[51.4372,-9.4952],note:"A small island off Cork, Mo Muntervary's home.",
+  e:[["mo","gw",0,"n","Heads home here, on the run with a dangerous mind."]]},
+ {id:"sheepshead",name:"Sheep's Head, Ireland",ll:[51.565,-9.72],note:"A long, quiet peninsula in West Cork. Holly's home in 2043.",
+  e:[["mo","btc",6,"a","Very old, and Holly's neighbour."],["marinus","btc",6,"a","Arrives as the book nears its end.","Carries Lorelei and Rafiq away to safety."]]},
+ {id:"swiss",name:"Swiss Alps",ll:[46.5,7.6],rough:"The ski resort in the book is not on real maps. The pin is a rough spot.",note:"A winter holiday that changes Hugo's life.",
+  e:[["hugo","btc",2,"n","Falls for Holly Sykes there.","He takes the Anchorites' offer. Holly is left behind."]]},
+ {id:"iceland",name:"Iceland",ll:[64.1466,-21.9426],rough:"The pin sits on Reykjavik.",note:"Ice, wind, and a bad night for a novelist.",
+  e:[["crispin","btc",4,"n","Travelling for his books, he lands in Iceland."],["hugo","btc",4,"a","Turns up beside Crispin, not a day older.","He grills Crispin about Holly, then wipes his memory."]]},
+ {id:"iraq",name:"Baghdad",ll:[33.3152,44.3661],note:"Where a war reporter works, and where he keeps going back.",
+  e:[["ed","btc",3,"n","Reports from Iraq, and cannot quite stay away."],["spyglass","btc",3,"a","Ed files his stories for Spyglass."]]},
+ // Invented places: no spot on a real map.
+ {id:"slade",name:"Slade House",where:"Behind a small black door in a narrow alley, in an ordinary English town.",note:"A house that is only there every nine years.",
+  e:[["souleaters","sh",0,"n","The Grayer twins lure in one guest every nine years.","They eat the guest's soul to stay alive."],["marinus","sh",0,"a","Dr Iris Marinus-Fenby walks in. Deliberately."],["horology","sh",0,"a","A Horologist comes calling."],["crispin","sh",0,"f","His novel Desiccated Embryos turns up."]]},
+ {id:"shiranui",name:"Mount Shiranui",where:"An invented mountain domain in Japan, beyond Nagasaki.",note:"A sealed shrine, high in the snow.",
+  e:[["enomoto","ta",0,"a","Abbot of the shrine. Orito is taken there.","His order stays alive on stolen life."],["souleaters","ta",0,"a","The shrine guards a dark secret about long life."]]},
+ {id:"buenas",name:"Buenas Yerbas",where:"An invented city on the California coast.",note:"Sun, smog and a nuclear plant with powerful friends.",
+  e:[["luisa","ca",0,"n","Digs into the Swannekke nuclear plant."],["spyglass","ca",0,"a","Luisa's magazine, and her byline."],["sextet","ca",0,"a","Luisa hears it in a record shop and knows it from somewhere."]]}
+];
+const placeById=Object.fromEntries(PLACES.map(p=>[p.id,p]));
+
 const byId=Object.fromEntries(C.map(c=>[c.id,c])),bookById=Object.fromEntries(BOOKS.map(b=>[b.id,b]));
 // state: 0 not read, 99 read
 let st={};BOOKS.forEach(b=>st[b.id]=b.id==="btc"?1:0);const NB=BOOKS.length;
@@ -775,17 +871,66 @@ async function drawWeb(){
   webFocus(cyFocus);
 }
 function stopWeb(){if(cy){cy.destroy();cy=null;cyKey=""}}
+// The world map (Leaflet, served from vendor/). It loads only when a reader opens the map tab.
+// A place shows when the reader has read a book with an entry there; search and the people/things filter apply too.
+const visP=en=>visE({b:en[1],p:en[2]||undefined});
+const plEntries=p=>p.e.filter(en=>visP(en)&&inF(byId[en[0]])&&(!q.trim()||qHit(p.name)||hitC(byId[en[0]])||qHit(en[4])));
+const plBooks=es=>BOOKS.filter(b=>es.some(en=>en[1]===b.id));
+const plGrad=es=>{const bs=plBooks(es);if(!bs.length)return "var(--lock)";const w=100/bs.length;return `conic-gradient(${bs.map((b,i)=>`var(--${b.id}) ${i*w}% ${(i+1)*w}%`).join(",")})`};
+const pinHtml=(p,es)=>`<span class="pin${p.rough||!p.ll?" rough":""}" style="--g:${plGrad(es)}"><b>${new Set(es.map(en=>en[0])).size}</b></span>`;
+let lmap=null,lpins=null,lfit="",lload=null;
+function loadLeaflet(){
+  if(window.L)return Promise.resolve();
+  return lload||(lload=new Promise((ok,bad)=>{const s=document.createElement("script");s.src="vendor/leaflet/leaflet.js";s.onload=ok;s.onerror=()=>{lload=null;bad()};document.head.appendChild(s)}));
+}
+function renderMap(){
+  const shown=PLACES.map(p=>({p,es:plEntries(p)})).filter(x=>x.es.length);
+  const on=shown.filter(x=>x.p.ll),off=shown.filter(x=>!x.p.ll);
+  const chip=({p,es})=>`<button class="chip plc${p.ll?"":" off"}" type="button" data-place="${p.id}" style="--g:${plGrad(es)}"><i></i><span>${p.name} <small>${plBooks(es).map(b=>b.ab).join(", ")}</small></span></button>`;
+  document.getElementById("placeList").innerHTML=!shown.length?`<div class="empty">${q.trim()&&NREAD()?`No place you have read matches “${esc(q.trim())}”.`:"Mark a book as read to put its places on the map."}</div>`:
+    (on.length?`<h3>On the map</h3><div class="chips">${on.map(chip).join("")}</div>`:"")+(off.length?`<h3>Off the map: invented places</h3><div class="chips">${off.map(chip).join("")}</div>`:"");
+  loadLeaflet().then(()=>{
+    if(!lmap){
+      lmap=L.map("map",{worldCopyJump:true,scrollWheelZoom:false,minZoom:0,maxZoom:12,zoomSnap:.25}).setView([30,20],1.5);
+      // Free OpenStreetMap tiles, no key. CSS softens them to match the site, and turns them dark in dark mode.
+      L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(lmap);
+      lpins=L.layerGroup().addTo(lmap);
+      // Wheel zoom only after the reader clicks into the map, so the page still scrolls past it.
+      lmap.on("click focus",()=>lmap.scrollWheelZoom.enable());lmap.on("mouseout blur",()=>lmap.scrollWheelZoom.disable());
+    }
+    lmap.invalidateSize();lpins.clearLayers();
+    on.forEach(({p,es})=>{
+      const m=L.marker(p.ll,{icon:L.divIcon({className:"lf-pin",html:pinHtml(p,es),iconSize:[34,34],iconAnchor:[17,41]}),title:p.name,alt:p.name,riseOnHover:true,keyboard:true});
+      m.bindTooltip(p.name,{className:"ptip",direction:"top",offset:[0,-40]});
+      m.on("click",()=>openPlace(p.id));m.addTo(lpins);
+    });
+    // Fit the view to the pins when the set of places changes, not on every search keystroke.
+    const key=on.map(x=>x.p.id).join();
+    if(key!==lfit){lfit=key;if(on.length>1)lmap.fitBounds(L.latLngBounds(on.map(x=>x.p.ll)),{padding:[46,46],maxZoom:6});else if(on.length)lmap.setView(on[0].p.ll,5);else lmap.setView([30,20],1.5)}
+  }).catch(()=>{document.getElementById("map").innerHTML=`<div class="empty">The map could not load. Check your connection and try again.</div>`});
+}
+function openPlace(pid){
+  const p=placeById[pid];if(!sheet.classList.contains("open"))lastF=document.activeElement;
+  const es=p.e.filter(visP).sort((a,b)=>BOOKS.findIndex(x=>x.id===a[1])-BOOKS.findIndex(x=>x.id===b[1])||(a[2]||0)-(b[2]||0));
+  const tl=es.map(en=>{const c=byId[en[0]],b=bookById[en[1]];
+    return `<li class="${en[3]}" style="--b:var(--${b.id})"><h3>${c.name}<small>${b.t}${en[2]?", part "+en[2]:""} (${KIND(c,{k:en[3]})})</small></h3><p>${en[4]}</p>${en[5]?`<button class="reveal" type="button">Show how it ends for them</button><p class="endtxt" hidden>${en[5]}</p>`:""}<button class="chip" type="button" data-id="${c.id}">${avatar(c)}<span>${c.name} <small>${c.kind==="thing"?"everywhere it turns up":"everywhere they turn up"}</small></span></button></li>`}).join("");
+  const sub=p.ll?(p.rough?`<p class="rough-note">${p.rough}</p>`:""):`<p class="rough-note">Invented. ${p.where}</p>`;
+  sbody.innerHTML=`<div class="sheet-top"><span class="pinbig" aria-hidden="true">${pinHtml(p,es)}</span><div><h2 id="sheetName">${p.name}</h2><p class="role">${p.note}</p>${sub}</div></div><ul class="tl">${tl||`<li><p>Mark a book as read to see who turns up here.</p></li>`}</ul>`;
+  sheet.dataset.id="";sbody.scrollTop=0;sheet.style.transform="";sheet.classList.add("open");scrim.classList.add("open");document.documentElement.classList.add("lock");sheet.querySelector(".close").focus();
+}
 const KIND=(c,e)=>(c.kind==="thing"?{a:"appears",n:"central",m:"mentioned",f:"echo"}:{a:"appears",n:"main character",m:"mentioned",f:"relative or work"})[e.k];
 const NREAD=()=>BOOKS.filter(b=>st[b.id]).length;
 function render(){
   renderBooks();
-  const v=document.getElementById("view");
+  const v=document.getElementById("view"),mEl=document.getElementById("mapView");
+  v.hidden=view==="map";mEl.hidden=view!=="map";
   if(view==="web"){if(!v.querySelector(".web"))v.innerHTML=renderWeb();drawWeb()}
-  else{stopWeb();v.innerHTML=view==="book"?renderBoard():renderYears()}
-  document.getElementById("legend").hidden=view==="web";
+  else{stopWeb();if(view==="map"){v.innerHTML="";renderMap()}else v.innerHTML=view==="book"?renderBoard():renderYears()}
+  document.getElementById("legend").hidden=view==="web"||view==="map";
   document.getElementById("tBook").setAttribute("aria-selected",view==="book");
   document.getElementById("tYear").setAttribute("aria-selected",view==="year");
   document.getElementById("tWeb").setAttribute("aria-selected",view==="web");
+  document.getElementById("tMap").setAttribute("aria-selected",view==="map");
   document.querySelectorAll("[data-f]").forEach(b=>b.setAttribute("aria-pressed",b.dataset.f===flt));
   const np=C.filter(c=>c.kind==="person"&&inF(c)&&ok(c.id)&&inQ(c)).length,nt=C.filter(c=>c.kind==="thing"&&inF(c)&&ok(c.id)&&inQ(c)).length,nb=NREAD();
   document.getElementById("count").textContent=!nb?"":q.trim()?`Found ${np} ${np===1?"person":"people"} and ${nt} ${nt===1?"thing":"things"} for \u201c${q.trim()}\u201d.`:`Showing ${np} ${np===1?"person":"people"} and ${nt} ${nt===1?"thing":"things"} from ${nb} ${nb===1?"book":"books"}.`;
@@ -805,7 +950,8 @@ function openSheet(id){
     ls.sort((a,b)=>BOOKS.findIndex(x=>x.id===a[2])-BOOKS.findIndex(x=>x.id===b[2]));
     const lab=[...new Set(ls.map(l=>l[3]))].join("; "),bks=[...new Set(ls.map(l=>bookById[l[2]].ab))].join(", ");
     return `<button class="chip" type="button" data-id="${o.id}">${avatar(o)}<span>${o.name} <small>${lab}, ${bks}</small></span></button>`}).join("");
-  sbody.innerHTML=`<div class="sheet-top">${aiOn&&PORTRAITS[c.id]?`<button class="pbig" type="button" aria-label="Show bigger portrait of ${c.name}">${avatar(c)}<span class="zoom">Tap to enlarge</span></button>`:avatar(c)}<div><h2 id="sheetName">${c.name}</h2><p class="role">${c.role}</p>${aiOn&&PORTRAITS[c.id]?`<p class="ai-cap">AI-generated. Probably not who you pictured.</p>`:""}</div></div><ul class="tl">${tl}</ul>${links?`<div class="links"><h4>Connected to</h4><div class="chips">${links}</div></div>`:""}`;
+  const pls=PLACES.filter(p=>p.e.some(en=>(en[0]===id||p.thing===id)&&visP(en))).map(p=>{const es=p.e.filter(visP);return `<button class="chip plc${p.ll?"":" off"}" type="button" data-place="${p.id}" style="--g:${plGrad(es)}"><i></i><span>${p.name}</span></button>`}).join("");
+  sbody.innerHTML=`<div class="sheet-top">${aiOn&&PORTRAITS[c.id]?`<button class="pbig" type="button" aria-label="Show bigger portrait of ${c.name}">${avatar(c)}<span class="zoom">Tap to enlarge</span></button>`:avatar(c)}<div><h2 id="sheetName">${c.name}</h2><p class="role">${c.role}</p>${aiOn&&PORTRAITS[c.id]?`<p class="ai-cap">AI-generated. Probably not who you pictured.</p>`:""}</div></div><ul class="tl">${tl}</ul>${links?`<div class="links"><h4>Connected to</h4><div class="chips">${links}</div></div>`:""}${pls?`<div class="links"><h4>On the map</h4><div class="chips">${pls}</div></div>`:""}`;
   sheet.dataset.id=id;sbody.scrollTop=0;sheet.style.transform="";sheet.classList.add("open");scrim.classList.add("open");document.documentElement.classList.add("lock");sheet.querySelector(".close").focus();
   if(cy)webFocus(id);
 }
@@ -853,11 +999,13 @@ document.getElementById("tBook").onclick=()=>{view="book";save();render()};
 document.querySelectorAll("[data-f]").forEach(b=>b.onclick=()=>{flt=b.dataset.f;save();render()});
 document.getElementById("tYear").onclick=()=>{view="year";save();render()};
 document.getElementById("tWeb").onclick=()=>{view="web";save();render()};
+document.getElementById("tMap").onclick=()=>{view="map";save();render()};
+document.getElementById("placeList").addEventListener("click",e=>{const r=e.target.closest("[data-place]");if(r)openPlace(r.dataset.place)});
 const qIn=document.getElementById("q"),qClr=document.getElementById("qClr");
 qIn.addEventListener("input",()=>{q=qIn.value;qClr.hidden=!q;render()});
 qClr.onclick=()=>{qIn.value=q="";qClr.hidden=true;render();qIn.focus()};
 document.getElementById("view").addEventListener("click",e=>{const r=e.target.closest(".row,.moment");if(r)openSheet(r.dataset.id)});
-sheet.addEventListener("click",e=>{if(e.target.closest(".close"))return closeSheet();const pb=e.target.closest(".pbig");if(pb)return openViewer(sheet.dataset.id);const rv=e.target.closest(".reveal");if(rv){rv.nextElementSibling.hidden=false;rv.remove();return}const ch=e.target.closest(".chip");if(ch)openSheet(ch.dataset.id)});
+sheet.addEventListener("click",e=>{if(e.target.closest(".close"))return closeSheet();const pb=e.target.closest(".pbig");if(pb)return openViewer(sheet.dataset.id);const rv=e.target.closest(".reveal");if(rv){rv.nextElementSibling.hidden=false;rv.remove();return}const pc=e.target.closest("[data-place]");if(pc)return openPlace(pc.dataset.place);const ch=e.target.closest(".chip");if(ch)openSheet(ch.dataset.id)});
 scrim.addEventListener("click",closeSheet);
 document.addEventListener("keydown",e=>{if(e.key!=="Escape")return;if(!thxModal.hidden)thxModal.hidden=true;else if(!aiModal.hidden)closeAiModal(false);else if(!viewer.hidden)closeViewer();else if(sheet.classList.contains("open"))closeSheet()});
 const thxModal=document.getElementById("thxModal"),thxBtn=document.getElementById("thxBtn");
