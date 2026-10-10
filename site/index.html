@@ -690,7 +690,8 @@ let cyLib=null,cy=null,cyKey="",cyFocus=null;
 function loadCy(){return cyLib||(cyLib=new Promise((res,rej)=>{const s=document.createElement("script");s.src="vendor/cytoscape-3.33.1.min.js";s.onload=()=>res(window.cytoscape);s.onerror=()=>{cyLib=null;rej(new Error("cytoscape"))};document.head.appendChild(s)}))}
 const cssv=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 // Our drawings as node pictures. Images cannot read CSS variables, so swap them for the current colours.
-const svgUri=svg=>"data:image/svg+xml;charset=utf-8,"+encodeURIComponent(svg.replace("<svg ",'<svg xmlns="http://www.w3.org/2000/svg" ').replace(/var\(--([\w-]+)\)/g,(m,n)=>cssv("--"+n)));
+// Give each picture a fixed square size: without one, phone browsers treat it as 300x150 and Cytoscape crops it.
+const svgUri=svg=>"data:image/svg+xml;charset=utf-8,"+encodeURIComponent(svg.replace("<svg ",'<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" ').replace(/var\(--([\w-]+)\)/g,(m,n)=>cssv("--"+n)));
 const bookImg=id=>svgUri(`<svg viewBox="0 0 24 24" color="#1B2238" fill="none" stroke="#1B2238" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">${BOOK_ICONS[id]}</svg>`);
 const hash=s=>{let h=7;for(const ch of s)h=(h*31+ch.charCodeAt(0))|0;return Math.abs(h)};
 function renderWeb(){
