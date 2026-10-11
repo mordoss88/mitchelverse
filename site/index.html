@@ -30,6 +30,7 @@ try{const t=localStorage.getItem("mv-theme");if(t==="light"||t==="dark")document
   box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
   --bg:#F1F2EE;--panel:#FFFFFF;--ink:#1B2238;--muted:#5A6177;--line:#DADDE3;--lock:#E9EBEE;--edge:#1B2238;--on:#1B2238;--rail:#1B2238;
   --sun:#EBD08A;--pink:#E7A3AF;--sky:#A9C6E8;--mint:#9CCFC2;--violet:#7D89D6;--hero:#22304F;
+  --hero-bg:#DCE5F4;--hero-ink:#1B2238;--hero-em:#4E5CB8;--hero-lede:#3A4360;--hero-shadow:#EBD08A;--hero-dot:rgba(27,34,56,.35);--hero-glow:rgba(125,137,214,.28);
   --gold:#5F6DC4;--gold-soft:#B9C0E8;
   --gw:#93CFC2;--n9d:#E9CF86;--ca:#A6C6EA;--bsg:#B0D196;--ta:#EDAA96;--btc:#BCADEA;--sh:#E8A9C2;--ua:#F0C08F;
   --display:"Fraunces",Georgia,serif;
@@ -37,9 +38,9 @@ try{const t=localStorage.getItem("mv-theme");if(t==="light"||t==="dark")document
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
   --bg:#121726;--panel:#1C2337;--ink:#EEF0F6;--muted:#B4BACB;--line:#2E3650;--lock:#252D44;--edge:#04060D;--rail:#5E6890;--hero:#1A2747;
-  --gold:#AEB7F0;--gold-soft:#4A5590;color-scheme:dark}}
+  --gold:#AEB7F0;--gold-soft:#4A5590;--hero-bg:var(--hero);--hero-ink:#F4F1E8;--hero-em:var(--sun);--hero-lede:#D9DEEC;--hero-shadow:var(--edge);--hero-dot:rgba(255,255,255,.7);--hero-glow:rgba(169,198,232,.25);color-scheme:dark}}
 :root[data-theme="dark"]{--bg:#121726;--panel:#1C2337;--ink:#EEF0F6;--muted:#B4BACB;--line:#2E3650;--lock:#252D44;--edge:#04060D;--rail:#5E6890;--hero:#1A2747;
-  --gold:#AEB7F0;--gold-soft:#4A5590;color-scheme:dark}
+  --gold:#AEB7F0;--gold-soft:#4A5590;--hero-bg:var(--hero);--hero-ink:#F4F1E8;--hero-em:var(--sun);--hero-lede:#D9DEEC;--hero-shadow:var(--edge);--hero-dot:rgba(255,255,255,.7);--hero-glow:rgba(169,198,232,.25);color-scheme:dark}
 html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px);background:var(--bg)}
 *,*::before,*::after{box-sizing:inherit}
 /* dotted paper */
@@ -49,14 +50,14 @@ body{margin:0;color:var(--ink);font-family:var(--serif);line-height:1.6;-webkit-
 button,select{font:inherit;color:inherit}
 :focus-visible{outline:3px solid var(--pink);outline-offset:3px}
 /* hero */
-.hero{position:relative;margin:28px 0 22px;background:var(--hero);color:#FFF6E5;border:2px solid var(--edge);border-radius:20px;box-shadow:6px 6px 0 var(--edge);padding:30px 22px 26px;overflow:hidden;display:grid;gap:22px}
-.hero::before{content:"";position:absolute;inset:0;background:radial-gradient(1.5px 1.5px at 18% 22%,rgba(255,255,255,.7) 50%,transparent 51%),radial-gradient(1px 1px at 72% 14%,rgba(255,255,255,.6) 50%,transparent 51%),radial-gradient(1px 1px at 88% 62%,rgba(255,255,255,.5) 50%,transparent 51%),radial-gradient(1.5px 1.5px at 40% 80%,rgba(235,208,138,.7) 50%,transparent 51%),radial-gradient(ellipse 60% 70% at 85% 110%,rgba(169,198,232,.25),transparent 70%);pointer-events:none}
+.hero{position:relative;margin:28px 0 22px;background:var(--hero-bg);color:var(--hero-ink);border:2px solid var(--edge);border-radius:20px;box-shadow:6px 6px 0 var(--edge);padding:30px 22px 26px;overflow:hidden;display:grid;gap:22px}
+.hero::before{content:"";position:absolute;inset:0;background:radial-gradient(1.5px 1.5px at 18% 22%,var(--hero-dot) 50%,transparent 51%),radial-gradient(1px 1px at 72% 14%,var(--hero-dot) 50%,transparent 51%),radial-gradient(1px 1px at 88% 62%,var(--hero-dot) 50%,transparent 51%),radial-gradient(1.5px 1.5px at 40% 80%,rgba(235,208,138,.7) 50%,transparent 51%),radial-gradient(ellipse 60% 70% at 85% 110%,var(--hero-glow),transparent 70%);pointer-events:none}
 .hero>*{position:relative}
 .kicker{display:inline-block;justify-self:start;font-family:var(--sans);font-weight:700;font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;background:var(--sun);color:var(--on);border:1.5px solid var(--edge);border-radius:999px;padding:4px 12px;box-shadow:2px 2px 0 var(--edge)}
-h1{font-family:var(--display);font-weight:600;font-size:clamp(2.9rem,14vw,5.4rem);line-height:.9;margin:0;letter-spacing:-.015em;color:#F4F1E8;
-  text-shadow:3px 3px 0 var(--edge)}
-h1 span{display:block;font-style:italic;font-weight:400;color:var(--sun)}
-.lede{margin:0;max-width:44ch;font-size:1.02rem;line-height:1.55;color:#D9DEEC}
+h1{font-family:var(--display);font-weight:600;font-size:clamp(2.9rem,14vw,5.4rem);line-height:.9;margin:0;letter-spacing:-.015em;color:var(--hero-ink);
+  text-shadow:3px 3px 0 var(--hero-shadow)}
+h1 span{display:block;font-style:italic;font-weight:400;color:var(--hero-em)}
+.lede{margin:0;max-width:44ch;font-size:1.02rem;line-height:1.55;color:var(--hero-lede)}
 /* the hero stack: all eight novels lying flat, each with its own motif */
 .stack{display:flex;flex-direction:column;align-items:center;margin-top:4px;width:100%}
 .bk{display:flex;align-items:center;gap:8px;height:34px;padding:0 0 0 12px;margin-top:-2px;border:2px solid var(--edge);border-radius:5px;background:var(--b);color:var(--on);box-shadow:4px 4px 0 var(--edge);position:relative;overflow:hidden;font-style:normal;
